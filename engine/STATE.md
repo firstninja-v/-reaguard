@@ -131,7 +131,7 @@ counted here (one fact, one home).
 | Tests (`cargo test --all`) | 157 |
 | Backlog items (`B-NNN`) | 65 |
 | Open backlog items (High) | 0 |
-| Durable lessons (`K-NNN`) | 66 |
+| Durable lessons (`K-NNN`) | 67 |
 | Decision records (`ADR-NNNN`) | 22 |
 | Markdown docs (tracked) | 45 |
 

@@ -5,7 +5,7 @@
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "KNOWLEDGE.md": {
-      "sha256": "70f7b941465d9b5611ad6a9bc84cdd1677771edc60688efeea6c73157e8e716e",
+      "sha256": "b316f3f276d1ace4981db1afeb783de971e6ff94af5648773d35be89614361b2",
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "README.md": {
@@ -13,7 +13,7 @@
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "STATE.md": {
-      "sha256": "1ccd6ddfc53aebc0139da57541f1f701eb905b47709f249bd23cefc548cb2754",
+      "sha256": "01c46a9a531d5b91edd2f1a9bd9ec8aaad0bf626be79d9033395858291dba920",
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "crates/direa-cli/src/build.rs": {
@@ -31,6 +31,10 @@
     "crates/direa-core/src/guard.rs": {
       "reason": "Cross-platform correctness and associated documentation",
       "sha256": "ada778f16154abaaaa576a885545841fefa50b6a9d7d7bf979737b75cbac68fe"
+    },
+    "crates/direa-cli/tests/adapters.rs": {
+      "reason": "Cross-platform correctness and associated documentation",
+      "sha256": "4c9731dace32d29f495db77a9f0d16c5daa042e5569ab37994c0f5b36fab42bb"
     }
   },
   "added": {

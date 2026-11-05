@@ -582,3 +582,9 @@ Canonicalizing only existing whole paths compares a canonical source to a lexica
 
 **K-066 — Rewriting bytes does not preserve executable permissions.**
 `std::fs::write` creates a regular non-executable output by default. Copy the source file target's ordinary Unix permission bits after adapters and before post-build verification, excluding privileged mode bits. A compiled native before/after execution smoke test exposed the defect (B-065).
+
+**K-067 — Adapter fixtures must use portable command semantics.**
+POSIX `printf` and semicolon-separated `exit` commands do not represent the same
+tool execution under Windows cmd. The adapter capture tests now use Node commands
+to produce stdout, stderr and an explicit nonzero exit consistently on all hosts.
+This retains the failure-propagation assertion rather than skipping it (B-064).

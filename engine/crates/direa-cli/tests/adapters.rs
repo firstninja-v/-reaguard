@@ -61,13 +61,21 @@ fn node_available() -> bool {
 
 /// A noisy but successful wrapped tool must not corrupt the response.
 fn assert_capture_ok(script: &str, env_key: &str) {
-    let resp = run_adapter(script, env_key, "printf 'noisy tool stdout\\n'");
+    let resp = run_adapter(
+        script,
+        env_key,
+        r#"node -e "console.log('noisy tool stdout')""#,
+    );
     assert_eq!(resp["status"], "ok", "{script}: {resp}");
 }
 
 /// A failing wrapped tool must surface its output in a finding.
 fn assert_failure_surfaced(script: &str, env_key: &str) {
-    let resp = run_adapter(script, env_key, "echo boom >&2; exit 3");
+    let resp = run_adapter(
+        script,
+        env_key,
+        r#"node -e "console.error('boom');process.exit(3)""#,
+    );
     assert_eq!(resp["status"], "error", "{script}: {resp}");
     let msg = resp["findings"][0]["message"].as_str().unwrap_or_default();
     assert!(
