@@ -1,105 +1,119 @@
 # REAguard
 
-**Add friction to AI-assisted reverse engineering.**
+**JavaScript release hardening with compatibility checks.**
 
 [![Tests](https://github.com/firstninja-v/-reaguard/actions/workflows/test.yml/badge.svg)](https://github.com/firstninja-v/-reaguard/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Minify your JavaScript. Add bounded synthetic decoys. Verify what you ship.
+Minify a bundle. Preview the changes. Test the result. Verify what you ship.
 
-A small JavaScript release packager with reproducible minification, optional synthetic data, and SHA-256 integrity reports. Written as a standalone implementation. Requires Node.js 22 or newer.
+**0.2.0 — experimental, JavaScript only.** REAguard reduces readable formatting and can optionally rename local identifiers or add synthetic comments. It has **not** demonstrated resistance to AI cloning. It is not a replacement for a multi-platform obfuscator, access control, or keeping secrets on a server.
 
-Status: **0.1.0 — initial implementation.** Supports JavaScript bundles, CommonJS and ES modules. Anti-cloning effectiveness has not been benchmarked.
+## Quick start
 
-## Run
+Requires Node.js 22 or newer. Start with the included fixture, not your live deployment.
 
 ```sh
 git clone https://github.com/firstninja-v/-reaguard.git reaguard
 cd reaguard
-npm ci
+npm ci --ignore-scripts
 npm test
-node src/cli.js plan examples/calculator.cjs --decoys 64
-node src/cli.js build examples/calculator.cjs --out release-demo --seed release-001 --decoys 64
+node src/cli.js plan examples/calculator.cjs
+node src/cli.js build examples/calculator.cjs --out release-demo
 node src/cli.js verify release-demo
 ```
 
-Compare the sample before and after packaging:
+Compare behavior:
 
 ```sh
 node -e "console.log(require('./examples/calculator.cjs').total([{price:19.95,quantity:3}],0.1))"
 node -e "console.log(require('./release-demo/calculator.cjs').total([{price:19.95,quantity:3}],0.1))"
 ```
 
-Both print `53.86`. Verification reports `"valid": true`. Use your own application tests for real releases.
+Both print `53.86`. Verification reports `"valid": true`. Each build needs a **new output directory** whose parent exists. Rerunning with the same directory fails rather than replacing it.
 
-Supply a **self-contained bundle**, not a project entry point with relative dependencies. This tool does not bundle imports or copy assets. `.mjs` enables module parsing automatically; pass `--module` for ESM `.js`. Preserve your application's package type when deploying `.js`.
+## Will it change my code or UI?
 
-`build` requires a nonexistent output directory whose parent exists. It never overwrites an existing release. `plan` validates input and options without writing files; it does not parse or transform the code. JSON errors and unsuccessful integrity checks exit with status 1.
+REAguard does not write to the input bundle. It writes a separate artifact, `package.json`, and `manifest.json`. It does not edit HTML, CSS, images, or your source repository.
 
-## What ships
+The output JavaScript is reformatted. **No transform can promise compatibility with every application.** By default, compression and identifier renaming are disabled; function/class names, properties, and license comments are retained. Both input and final output are parsed. Optional synthetic data is a comment, so it creates no runtime array, global variables, calls, or changed evaluation result.
 
-- A minified artifact with local identifiers shortened; public property names and function/class names remain intact.
-- License and preservation comments retained. Ordinary comments and source-map directives removed by the parser/printer, not regex rewriting.
-- Optional deterministic synthetic records appended as a discarded literal. Default: zero. Maximum: 4,096 records, additionally limited by `--max-growth` (default 262,144 bytes; maximum 1 MiB).
-- A reproducible `manifest.json` containing hashes, options and measured byte counts, without source filesystem paths or timestamps.
+We test a browser fixture before and after transformation, comparing rendered pixels, DOM state, styles, click and keyboard behavior, forms, Unicode text, and local storage. The tests cover classic scripts and modules with renaming on/off in Chromium, Firefox, and WebKit. These tests do not establish compatibility with your app or every framework.
 
-## CLI reference
+### Safe deployment workflow
 
-| Command or option | Meaning | Default |
-| --- | --- | --- |
-| `plan <file>` | Validate file type, size, and configuration; write nothing | — |
-| `build <file> --out <directory>` | Transform into a new release directory | — |
-| `verify <directory>` | Check artifact hash against its manifest | — |
-| `--seed <text>` | Reproducible synthetic-data seed, 1–256 characters | `release` |
-| `--decoys <number>` | Synthetic records, integer 0–4096 | `0` |
-| `--max-growth <bytes>` | Budget for appended synthetic data, integer 0–1048576 | `262144` |
-| `--module` | Parse `.js` input as an ES module | Off; automatic for `.mjs` |
-| `--help` | Show usage | — |
+1. Produce a **self-contained JavaScript bundle** with your existing build system. REAguard does not bundle dependencies or copy assets.
+2. Run `plan`. It performs the full parse/transform preflight and reports exact byte counts without writing anything.
+3. Build to a new directory. Test that output with your application's existing tests before deployment.
+4. Deploy using your existing asset pipeline. Recompute content hashes, SRI attributes and CSP hashes where applicable; preserve chunk paths, cache manifests and service-worker entries. REAguard does not update those references.
+5. Keep the original release for rollback. Verify the packaged artifact against a trusted manifest.
 
-Inputs are limited to 16 MiB. `--max-growth` limits the appended data, not total output size. The seed is not a password or encryption key. To use the installed command locally, run `npm link` and then `reaguard --help`; direct `node src/cli.js` invocation needs no linking.
+Imports, non-built-in `require` calls, dynamic imports, `import.meta`, Node location variables and common resource-loading constructs are rejected by default. This is a conservative syntax scan, not complete dependency analysis: aliases, framework loaders, string-generated paths and custom loaders can evade it. `--allow-external` bypasses those checks only when you have verified deployment paths yourself; warnings remain in the report.
 
-## Repository layout
+`.mjs` uses module mode; `.cjs` uses CommonJS. For ESM `.js`, pass `--module` explicitly. The generated package metadata records the selected mode so Node does not inherit a different type at the output location. Browser deployment must retain the correct `<script type="module">` attribute.
 
-```text
-src/core.js                 Transform, packaging, and integrity checks
-src/cli.js                  Command-line interface
-test/core.test.js           Behavioral and filesystem tests
-examples/calculator.cjs     Runnable input fixture
-.github/workflows/test.yml  Windows/Linux CI configuration
-docs/ARCHITECTURE.md        Design and trust boundaries
-docs/RELEASE.md             Release and publishing checklist
-CHANGELOG.md                Version history
-SECURITY.md                 Vulnerability reporting guidance
-CONTRIBUTING.md             Development conventions
-```
+### Optional application check
 
-Synthetic records add static noise without I/O, global variables, debugger checks, network calls, or instructions to analysis agents. They do increase parsing time and file size. A capable analyst can identify and remove them. The manifest deliberately documents their size; omit the manifest from public delivery if it is only needed in your private release pipeline.
+`--check` accepts a JSON array of executable and arguments, runs without a shell in the output directory, and must exit successfully within 30 seconds. `{artifact}` and `{out}` expand to absolute paths. The check can run arbitrary code: use a check you trust. Failed checks remove generated files where possible; unrelated files produced by a check are left intact.
 
-## Protection limits
-
-This is an initial JavaScript implementation, not a universal binary protector. Minification and synthetic records do not prevent cloning or conceal secrets. Keep proprietary decision logic and credentials on a controlled server when practical. REAguard itself is open source so its techniques and limitations can be inspected.
-
-Integrity verification detects changes relative to the manifest. It is **not authentication**: an attacker who can replace both files can recompute hashes. Keep manifests in trusted CI storage or sign release hashes separately.
-
-Run your own application tests against packaged output before deployment. Reflection on function source, stack traces, source locations, and code that depends on exact formatting can change under minification. Do not process signed artifacts without re-signing. No resistance score or performance advantage is claimed without a measured benchmark.
-
-## Development
+POSIX shell / PowerShell example:
 
 ```sh
-npm ci
-npm test
+node src/cli.js build examples/calculator.cjs --out release-checked --check '["node","--check","{artifact}"]'
 ```
 
-Tests cover CommonJS behavior, ES module exports, deterministic output, byte budgets, license comments, path traversal, tampering, dry runs, and overwrite protection. CI is configured for Linux and Windows with Node 22 and 24; local validation is distinct from a completed GitHub Actions run.
+This example is a Node syntax check, **not an application behavior test**. Substitute your actual test executable and arguments. Without `--check`, the manifest explicitly records `applicationCheck: "not-run"`. A successful custom check is recorded as `passed`; REAguard does not assess its test coverage.
 
-## Dependencies and distribution
+## Options
 
-Dependencies are locked. Terser performs parsing and minification; its license and the licenses of its dependencies remain applicable. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+| Command / option | Behavior | Default |
+| --- | --- | --- |
+| `plan <file>` | Full preflight and size estimate; no writes | — |
+| `build <file> --out <directory>` | Write a new release | — |
+| `verify <directory>` | Check artifact and generated package metadata hashes | — |
+| `--mangle` | Opt into local identifier renaming | Off |
+| `--module` | ES module semantics for `.js` | Off; automatic for `.mjs` |
+| `--decoys N` | Append 0–4096 synthetic records in a comment | `0` |
+| `--seed TEXT` | Deterministic seed, 1–256 characters | `release` |
+| `--max-growth BYTES` | Synthetic-comment budget, 0–1048576 bytes | `262144` |
+| `--allow-external` | Acknowledge and bypass dependency/path warnings | Off |
+| `--check JSON_ARGV` | Run a trusted validation command after writing | Not run |
+| `--version` / `--help` | Version / usage | — |
 
-REAguard is available under the [MIT license](LICENSE). `private: true` prevents accidental npm publication; the GitHub source is public. Install from this repository using the commands above.
+Inputs must be valid UTF-8, regular files up to 16 MiB; symlinks are rejected. Build errors and failed verification exit with status 1. Results and errors are JSON. Options not applicable to a command are rejected.
 
-## Help shape the project
+`--mangle` can affect parameter-name reflection and dependency injection; test before enabling it. Formatting changes affect function source strings, stack locations, signatures and checksums even with renaming disabled. Existing source maps are not regenerated. Preserve required third-party notices when deploying.
 
-Contribute compatibility tests, startup-time benchmarks, or reproducible measurements of analysis effort. See [CONTRIBUTING.md](CONTRIBUTING.md) and the [roadmap](ROADMAP.md).
+## Dummy data: experiment, not a security boundary
 
-[Open an issue](https://github.com/firstninja-v/-reaguard/issues) with a minimal synthetic reproduction. If the project helps your workflow, a star helps others discover it.
+```sh
+node src/cli.js build examples/calculator.cjs --out release-experiment --decoys 64 --seed demo
+```
+
+Synthetic records are deliberately non-executable and explicitly labeled. They increase download size and parsing/scanning work, and can be trivially stripped. They do not encrypt logic or prove resistance to copying. We removed executable dummy arrays because they changed JavaScript completion values and added unnecessary runtime work. No prompt injection or debugger traps are inserted.
+
+## Verification limits
+
+SHA-256 checks establish consistency with an **unsigned manifest**, not publisher identity or application correctness. An attacker able to replace both files can recompute the hashes. Keep manifests in trusted storage or authenticate them separately. Legacy version-1 manifests remain readable but do not cover package metadata.
+
+## Development and evidence
+
+```sh
+npm ci --ignore-scripts
+npm test
+npx playwright install chromium firefox webkit
+npm run test:browser
+```
+
+See [VALIDATION.md](docs/VALIDATION.md) for the tested scope and exclusions. CI runs Node tests on Windows/Linux and Node 22/24, plus browser tests on Linux. A green CI badge is compatibility evidence for the fixtures, not a protection score.
+
+- [Architecture](docs/ARCHITECTURE.md)
+- [Roadmap](ROADMAP.md) and [contributing](CONTRIBUTING.md)
+- [Security reporting](SECURITY.md)
+- [Release checklist](docs/RELEASE.md)
+
+## License and dependencies
+
+[MIT](LICENSE). Terser handles printing/minification; Acorn handles syntax and preflight inspection. Playwright is a development dependency. See [third-party notices](THIRD_PARTY_NOTICES.md). The repository is public; `private: true` only prevents accidental npm publication.
+
+Found a bug? [Open an issue](https://github.com/firstninja-v/-reaguard/issues) with a minimal synthetic reproduction. Useful contributions include framework fixtures and honest performance/analysis benchmarks.

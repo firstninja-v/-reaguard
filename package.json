@@ -1,13 +1,31 @@
 {
   "name": "reaguard",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/firstninja-v/-reaguard.git" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/firstninja-v/-reaguard.git"
+  },
   "private": true,
   "type": "module",
   "description": "Reproducible JavaScript release packaging with bounded synthetic data and integrity verification",
-  "bin": { "reaguard": "src/cli.js" },
-  "scripts": { "test": "node --test", "demo": "node src/cli.js build examples/calculator.cjs --out release-demo --seed demo --decoys 64" },
-  "engines": { "node": ">=22" },
-  "dependencies": { "terser": "5.51.2" }
+  "bin": {
+    "reaguard": "src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "demo": "node src/cli.js build examples/calculator.cjs --out release-demo --seed demo --decoys 64",
+    "test:browser": "playwright test",
+    "test:all": "npm test && npm run test:browser"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "acorn": "8.19.0",
+    "terser": "5.51.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1"
+  }
 }
