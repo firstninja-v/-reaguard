@@ -86,3 +86,5 @@ File hashes and patch inventory are checked by `npm run upstream:check`. Engine
 documentation changes explain the patch without erasing upstream history.
 
 Cross-platform validation also exposed a path-guard bug: a nonexistent output under a source alias could evade the overlap check. The engine now canonicalizes existing ancestors, with an additional symlink regression. The adapter protocol test uses explicit Node invocation instead of a POSIX-only stub.
+
+Rewritten file targets now retain ordinary Unix permission bits after adapters and before health checks, so native executables remain executable. Privileged setuid/setgid bits are not propagated. This is covered by the compiled native smoke test.

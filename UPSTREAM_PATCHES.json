@@ -1,11 +1,11 @@
 {
   "modified": {
     "BACKLOG.md": {
-      "sha256": "2771752c558dc862796a67c49d223b9d54f10822040b469ee9d6eba92ca1129a",
+      "sha256": "b3076db64e7566aece0d9f1f2a9372dc7b82b5e3a6d49198b3f3ed7e1a7abf95",
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "KNOWLEDGE.md": {
-      "sha256": "1dc44941616a6bdc87b391b6ca7e01ca65b17aa2b4ae80e1d561e1889696b8fa",
+      "sha256": "70f7b941465d9b5611ad6a9bc84cdd1677771edc60688efeea6c73157e8e716e",
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "README.md": {
@@ -13,11 +13,11 @@
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "STATE.md": {
-      "sha256": "68a7a0feffe12637c986f1e154f7ee22740fbc4a53585c51e5986a517751a4eb",
+      "sha256": "1ccd6ddfc53aebc0139da57541f1f701eb905b47709f249bd23cefc548cb2754",
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "crates/direa-cli/src/build.rs": {
-      "sha256": "5e61a836f98aef55909ebb900614a8f8688aa965d41df33000d8d73a348327dc",
+      "sha256": "4c44de0b68d9fbd4f7a62ac3c5abc43ca594364806301f217dc17874d7bc1fb4",
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "crates/direa-core/src/native_post.rs": {

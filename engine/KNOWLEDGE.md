@@ -579,3 +579,6 @@ Upstream extensionless Node adapters use CommonJS and fail when a parent package
 
 **K-065 — Missing output paths still need canonical ancestors.**
 Canonicalizing only existing whole paths compares a canonical source to a lexical destination. macOS temporary-directory aliases and Windows verbatim prefixes can bypass containment checks. Resolve the nearest existing ancestor, then normalize the missing suffix before comparing. Cross-platform CI exposed this in the existing guard regression (B-064).
+
+**K-066 — Rewriting bytes does not preserve executable permissions.**
+`std::fs::write` creates a regular non-executable output by default. Copy the source file target's ordinary Unix permission bits after adapters and before post-build verification, excluding privileged mode bits. A compiled native before/after execution smoke test exposed the defect (B-065).

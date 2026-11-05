@@ -483,6 +483,7 @@ pub fn build(
         }
 
         if !dry_run {
+            preserve_file_mode(src, &dest)?;
             post_build_check(src, &dest, kind, out, &manifest.verify)?;
         }
 
@@ -655,6 +656,21 @@ fn ensure_parent(dest: &Path) -> Result<()> {
                 .with_context(|| format!("creating {}", parent.display()))?;
         }
     }
+    Ok(())
+}
+
+fn preserve_file_mode(src: &Path, dest: &Path) -> Result<()> {
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        if src.is_file() && dest.is_file() {
+            let mode = std::fs::metadata(src)?.permissions().mode() & 0o777;
+            std::fs::set_permissions(dest, std::fs::Permissions::from_mode(mode))
+                .with_context(|| format!("preserving mode on {}", dest.display()))?;
+        }
+    }
+    #[cfg(not(unix))]
+    let _ = (src, dest);
     Ok(())
 }
 

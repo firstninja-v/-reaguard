@@ -163,3 +163,5 @@ registry in `crates/direa-core/src/planner.rs`, and the absence of a git remote
 | B-063 | Support the current Rust lint toolchain and Node package boundary | Low | Integration | Closed | Equivalent byte-string spelling for Clippy; explicit CommonJS package context for upstream adapters; K-064. |
 
 | B-064 | Fix output containment across symlink/prefix aliases | High | CLI | Closed | Resolve existing ancestors for missing output paths; add alias regression, portable adapter test and non-Linux lint fix (K-065). |
+
+| B-065 | Preserve executable permissions on rewritten file targets | High | CLI | Closed | Real compiled native smoke checks both execution and ordinary mode bits after hardening; K-066. |

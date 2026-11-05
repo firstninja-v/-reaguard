@@ -9,7 +9,7 @@ const cli = fileURLToPath(new URL('../src/cli.js', import.meta.url));
 const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'reaguard-engine-smoke-'));
 const run = (program, args, cwd = directory) => {
   const result = spawnSync(program, args, { cwd, encoding: 'utf8' });
-  assert.equal(result.status, 0, `${program} ${args.join(' ')}\n${result.stderr}`);
+  assert.equal(result.status, 0, `${program} ${args.join(' ')}\n${result.error ?? result.stderr}\n${result.signal ?? ''}`);
   return result.stdout;
 };
 try {
@@ -29,6 +29,7 @@ try {
     await fs.writeFile(path.join(directory, 'die-a-rea.toml'), '[project]\nname="native"\n[policy]\nprofile="low"\n[randomization]\nenabled=false\n[tarpit]\nenabled=false\n[[targets]]\npath="app"\n');
     const baseline = await fs.readFile(path.join(directory, 'app'));
     run(process.execPath, [cli, 'engine', 'build', '--out', 'native-release']);
+    assert.equal((await fs.stat(path.join(directory, 'native-release/app'))).mode & 0o777, (await fs.stat(path.join(directory, 'app'))).mode & 0o777);
     assert.equal(run(path.join(directory, 'native-release/app'), []), run(path.join(directory, 'app'), []));
     assert.deepEqual(await fs.readFile(path.join(directory, 'app')), baseline);
   }
