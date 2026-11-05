@@ -128,12 +128,12 @@ counted here (one fact, one home).
 | Metric | Value |
 |---|---|
 | Rust crates | 4 |
-| Tests (`cargo test --all`) | 152 |
-| Backlog items (`B-NNN`) | 61 |
+| Tests (`cargo test --all`) | 156 |
+| Backlog items (`B-NNN`) | 63 |
 | Open backlog items (High) | 0 |
-| Durable lessons (`K-NNN`) | 62 |
-| Decision records (`ADR-NNNN`) | 21 |
-| Markdown docs (tracked) | 44 |
+| Durable lessons (`K-NNN`) | 64 |
+| Decision records (`ADR-NNNN`) | 22 |
+| Markdown docs (tracked) | 45 |
 
 ## Appendix — history and do-not-redo ledger
 
@@ -335,3 +335,7 @@ counted here (one fact, one home).
   single-byte corruptions and 4000 seeded random inputs, asserting no panic and
   the conservative fallback contract (unchanged buffer when `changed` is false)
   (K-011). Closed `B-061`.
+
+## REAguard integration
+
+The upstream baseline passed its Rust suite in CI after adding an explicit CommonJS package boundary. B-062 fixes unsafe line-based JavaScript cleanup; B-063 updates a byte literal for current Clippy. The root project supplies engine invocation and parser-based JS packaging; upstream manifest/protocol names remain compatible. Validation for these changes is tracked by the root Engine workflow.

@@ -5,135 +5,135 @@
   "directory": "engine",
   "files": {
     ".dockerignore": {
-      "sha256": "b760ce1dca67ae02dafcb922be585538484c8ed4a0c5ac2fcf2e0827134ac612",
+      "sha256": "c42151f6be7201021a8a74ef1a60e75b57545f291c7197ba433f88412605990e",
       "mode": 0
     },
     ".github/workflows/ci.yml": {
-      "sha256": "847bde812038e53647fbf20b305aa44713465af206ff6f4e636a1171e34353d4",
+      "sha256": "a5b868216e48382b62a599b1ec515d77588a596aaeda8110548367fc65aaa978",
       "mode": 0
     },
     ".github/workflows/release.yml": {
-      "sha256": "6adc0d741ac0f916e677026f254da3496806854a6ac26b41b3c62cc27e706877",
+      "sha256": "8f5296fabc4b01c01f6b71ab50f7212c0af4d43f885192b3f5ad9e336cfab192",
       "mode": 0
     },
     ".gitignore": {
-      "sha256": "888ae85da114432000cbe65790fc4972f938ce8938d43bf41794a94ecfdef8f4",
+      "sha256": "15e051973c583d3afb1ddbe37c91b97c6978db949927393ead8d5e58728b89e4",
       "mode": 0
     },
     "AGENTS.md": {
-      "sha256": "b35449e9a76e54ab8e2b56a3ba9f0f7a96df2614afda9675cada133555102de6",
+      "sha256": "6bf64514f42ff23d81c376b22f2053afa6213ad5eca2611c6a2959a39fc1aba4",
       "mode": 0
     },
     "BACKLOG.md": {
-      "sha256": "e18251fe2993cd305787302e9d9abd3d2ee046cb7a73679ac7318a70f31c15c4",
+      "sha256": "add1c69bd0826276bf82d50019c73feef2469d1b8d605028f9c50dd4e16d279a",
       "mode": 0
     },
     "CHANGELOG.md": {
-      "sha256": "1eb56eeadbeb3233927939ac8c8df46bca9f1d9003b3ef2f4785f9a582e20674",
+      "sha256": "10830954003b25b66f3206c07de95794fca7f78d3ca2b36141f4185a34b45048",
       "mode": 0
     },
     "CONTRIBUTING.md": {
-      "sha256": "b018f5e74fefbaa40a9789d1ab5aeb12ee83d9e005ead228122318eebd0027cb",
+      "sha256": "d9500b80d58283baa6525fa2c87ad041f78349287b6299b0cdeff67df488a408",
       "mode": 0
     },
     "Cargo.lock": {
-      "sha256": "158ea1665062b2fc3686edb12bec239faab13ab189123ba408979e591251e615",
+      "sha256": "ac76abd786d823073b291b8c2f804f397db7c7bc1935471eedd8f52c9e7fefa6",
       "mode": 0
     },
     "Cargo.toml": {
-      "sha256": "4ea9abe9a8ce8612df0ba218b219b7b6f2335d0af0748d2326b88d4b79b91690",
+      "sha256": "a085952806ac1f1e096812bd988decd0b09e526b986cf2199fde99948c351783",
       "mode": 0
     },
     "KNOWLEDGE.md": {
-      "sha256": "245fc8d72a84c681a57c4c644c9d7db636412816b65b5ef5793b3918f91367dd",
+      "sha256": "c28bd03f35eed066b7b2491d18360138902c951cfaab2135aae979bb294e9a65",
       "mode": 0
     },
     "LICENSE": {
-      "sha256": "8bcc3e6301cec62921d80d06c1e2408debf70b7c0796766a0aeaeee2dc120b96",
+      "sha256": "854d73a5cb9ce3505049bafe7b507b98113cef24d768566a655fa70e70874179",
       "mode": 0
     },
     "README.md": {
-      "sha256": "1e75faadfa998f709469e5a4dd052f4a6a160cde0c0c46d054426814fffe42bd",
+      "sha256": "a1474a5fb9cdae926c0e392ab8a174b319313e8e30a69496a3f70d0ed8b0158a",
       "mode": 0
     },
     "STATE.md": {
-      "sha256": "a4ce3d915930fba920d9f020cd092ae18c348f828dbddaec47fd9cd75cb53a5a",
+      "sha256": "f10fdba4050b4bf08feeae71f47f30c0f13f623353836b07ad8a47e9cfa2b27a",
       "mode": 0
     },
     "action.yml": {
-      "sha256": "782106ecc24184d723ad44cc7f82ee17f6aa911c92b5f48c1344bdb9fc7202ca",
+      "sha256": "d778cc851990b213185a0c8ff809897c1e449242f9c7d044e4fc3806846dcce3",
       "mode": 0
     },
     "adapters/clr/direa-clr": {
-      "sha256": "a1072c53d1d2442fe8aaf69fb99c0f2710b7023c1fe6972670588078f3fc1a25",
+      "sha256": "3fa50eaee9fc9c93b0c25d15229b5238bee2db787d9aafa3dc1b568b68f27cd2",
       "mode": 493
     },
     "adapters/go/direa-go": {
-      "sha256": "76a461270b3a4d0a6e1628ae24a37ab1d8a0f6b272794d2f77fa64ddbec2979e",
+      "sha256": "0fb90b6d31ec06880afc546ef938448105c706ab2bfbaeb1d47af44e7f130134",
       "mode": 493
     },
     "adapters/js/direa-js": {
-      "sha256": "028f7d3596ba2b49c277e9a09003ac9344425037a2a4263151f55c0574385521",
+      "sha256": "12e12a2a8bf7185f1bf9194e901ad7548e472ed6b6707f08454c6b82d665c3ee",
       "mode": 493
     },
     "adapters/jvm/direa-jvm": {
-      "sha256": "24272fdf586d68a2fbbc5015e84391aa39614a389e0f2c93510a80ab4bf33ff5",
+      "sha256": "56d1fd8c26ccdafac422c4ac989c2ffc9e4d4b9499f9ebccc4c9013279916211",
       "mode": 493
     },
     "adapters/llvm/direa-llvm": {
-      "sha256": "4f854a174c7d67dee86bf71dce469e15aab1bbaac7e56eb1955654ef8cff7c09",
+      "sha256": "60ffa8e595e9ecdac42db56e86672910e963a58d04f3d2879fe1aecb1f912342",
       "mode": 493
     },
     "adapters/wasm/direa-wasm": {
-      "sha256": "69ba998c139e9afc920b1b9862c3953f50872fdab36da511cca00dca841ee7d1",
+      "sha256": "14ab059e5abcf029de1e0902bb5a57976666a51ca016bb0058aee7037943f996",
       "mode": 493
     },
     "bench/android-apk/die-a-rea.toml": {
-      "sha256": "3f942a20c629d829a847e5349af93c1bbcfc9d4d3ffaf785d933e041f579971f",
+      "sha256": "4aadf40c9ef70babdfc3bfed9de13e8bc0749cb68914de3188aadc6e08c67778",
       "mode": 0
     },
     "bench/dotnet/die-a-rea.toml": {
-      "sha256": "4814bebaef86063c72ec5e61ec5631dd00dad54ea01d8a69bc9a10849b431310",
+      "sha256": "0d5e09af721bd3acb6a515b1dca408297291498576a99234d37e87de108866cc",
       "mode": 0
     },
     "bench/electron-asar/die-a-rea.toml": {
-      "sha256": "0083dc9ba5962365df931691ab8c77d89221f1b21c36ec159f0aeac5f6e07ef7",
+      "sha256": "255d25f9f702184efed05ce704fd32d7feb0bd2a996b59922109b9abfe46fb99",
       "mode": 0
     },
     "bench/expected.json": {
-      "sha256": "ac7daca2b551a2203297714dd1c3aa871d015767ac0bbf61671f5cbf67fbd359",
+      "sha256": "3c4b0599932941cefb7889ea10900ea8a72e9f09025ae7e191575d5cbf23cddb",
       "mode": 0
     },
     "bench/gen_fixtures.py": {
-      "sha256": "754a2357cfa977f8be3e7098dba99f7c5454d72baaeaba4a50a103538f994911",
+      "sha256": "c55b963b7fb17597647ee59a6df4338b76c4587d492f232c95cf8782fa5c4440",
       "mode": 0
     },
     "bench/generate.sh": {
-      "sha256": "f14e5715ab56c473a294c870e3ebdef33a2c58c10048dab01daf9eba16c919c8",
+      "sha256": "b1b56e6cbb2d0d8053ca62048f05977c78bbc5c6369db7e8eea23f15926d34fd",
       "mode": 493
     },
     "bench/go/die-a-rea.toml": {
-      "sha256": "b1d528c7b4f3039253d9e61ae754fa0e5ecbefa452cdde5895a3050a566dc55a",
+      "sha256": "b0415117f65cdd772e564deea25349a44c51aff4d8d6187887ed5e4b723df63c",
       "mode": 0
     },
     "bench/java-class/die-a-rea.toml": {
-      "sha256": "ee15054e0e3b95071fe3c8e954f71dcaa9339e7a2dbbbf5ab3352568cdc5007c",
+      "sha256": "e37802631741e73d3e6de64ac3105a257aef1d0dc7c6d26413106fe8edb19b00",
       "mode": 0
     },
     "bench/java-jar/die-a-rea.toml": {
-      "sha256": "f06dd2aac588781d51aef564b7f85755f57aa568e7b3488565c53151b92209ac",
+      "sha256": "890c20b0d22539a13ac6ec1be26c0e4cd08f12b100361f48c50636b0f9a39961",
       "mode": 0
     },
     "bench/js-secrets/app.js": {
-      "sha256": "6940af82a512763f38d6d0262dc62031b9c32257293949a69a3ef70fd4199c36",
+      "sha256": "9b212ea194225c579855b0422f3a6e128ed199454d1e432ef6b490d7df225338",
       "mode": 0
     },
     "bench/js-secrets/die-a-rea.toml": {
-      "sha256": "4ad0eb87420d4b258a1c3b4c3974efb61ed286c32e9e98945bfd620977b5ea3c",
+      "sha256": "63bcf2ec938cf3a6be5d2850daeb6a457aedfc11926a0a146016d2f4970ae093",
       "mode": 0
     },
     "bench/js-tree/bundle/main.js": {
-      "sha256": "42a9f8dba4622c193e93c855a47a181bfa7d7d51c7921770538f849612fcb975",
+      "sha256": "6cfe049af183ccfbbcd5a2462b41fafebc4b936e7613c288e8fe30a009bb5820",
       "mode": 0
     },
     "bench/js-tree/bundle/package.json": {
@@ -141,416 +141,417 @@
       "mode": 0
     },
     "bench/js-tree/die-a-rea.toml": {
-      "sha256": "1047585b8c7ec75715813cd70db67e061c2b42720bd186f25c8e322016a36ee1",
+      "sha256": "a743284d031e76ae1a35b729a73ef7427dbede572a98051a96f968833c5e4bfb",
       "mode": 0
     },
     "bench/native-elf/die-a-rea.toml": {
-      "sha256": "980e97fb894282e52df0c8cebe26a4f120da4afbd6225997d93e9aa74bb1e936",
+      "sha256": "b181ee30209401ea15e4490acedd94b6bce425c006ea6fbdb186a54059840be1",
       "mode": 0
     },
     "bench/native-macho/die-a-rea.toml": {
-      "sha256": "0837a8b02d036ea803af3764f33f537f49fbd043e549666fcaba3bf6371df99d",
+      "sha256": "87b56fcb7fa4547bdddc943ef51b3bc8e7e85586903f076998cc7006d8819725",
       "mode": 0
     },
     "bench/native-pe/die-a-rea.toml": {
-      "sha256": "2bfc39155bec0c7da850b0e84ee6a5dba3348df46db3ba1553bc91fcc10f8db6",
+      "sha256": "a32d5c61d273773ff48a2f6d9afd155752bdfba0013f337bc05b3a4fd52bba62",
       "mode": 0
     },
     "bench/wasm-module/die-a-rea.toml": {
-      "sha256": "a76f0d8d933c61690aa149cd9ebd0a6be5d25642164442e81a45c7844db5241b",
+      "sha256": "5e99424ab739878ea8c628937966ee9658f28c71f818153580fbcf9c91a7b14f",
       "mode": 0
     },
     "crates/direa-cli/Cargo.toml": {
-      "sha256": "afb03c53d0d0926fa28d67e8f0670f01cb26a32cf50072846e0dd13087733da8",
+      "sha256": "341d89d8e8b08cff3385e97e6fbc0d75ce6335ed93cda4dc34c7fabf021475e8",
       "mode": 0
     },
     "crates/direa-cli/src/build.rs": {
-      "sha256": "046ca432b990d7eca6040185a065a4765f61d576c920f9e2d761c6024f2bb947",
+      "sha256": "91fd0d49cb4ad3d54a28b24595818a86a2103dd990404a87491b2f38d4f136f8",
       "mode": 0
     },
     "crates/direa-cli/src/main.rs": {
-      "sha256": "f377f434d5d143e5a34d49e48db68c85075bea0b2a107c6e5303584cc57023be",
+      "sha256": "4bc6c762b024ae84df79adb067358432b0e845dcb3012156b61cde6c39288517",
       "mode": 0
     },
     "crates/direa-cli/src/ui.rs": {
-      "sha256": "b93e20a93cfedc9d54100db52af177de8f93a553ad8e0639cf030dfab39e3ed3",
+      "sha256": "11341dda5cecc843ea001c8162d1054a41001e3963367dd211ab2454bc9a86b9",
       "mode": 0
     },
     "crates/direa-cli/tests/adapters.rs": {
-      "sha256": "95a13efe82037dad549a4076e8589fc9f7809daceeafae4b134353d977e6f6b0",
+      "sha256": "89fbf329892a36766d38c50e91f025ea741f090958fc0dcd3b675d58e4c1f8da",
       "mode": 0
     },
     "crates/direa-cli/tests/e2e.rs": {
-      "sha256": "2469207c489a792854dbb0cdb94b9f78f04331ce1b77864c72940a49776e5b31",
+      "sha256": "ab72956b83acf9a12ca8c845d38290244dee50c7e2170a4902d4caffb48b4c12",
       "mode": 0
     },
     "crates/direa-core/Cargo.toml": {
-      "sha256": "fc85ecf36cd2e1de83b92d57c47559c6b28bfcad5697b19b2c82699c598b4968",
+      "sha256": "acd9be14fc229f41362faa8b4f6b4d2c7138b3edaf7839fcd7c1902f4a624b47",
       "mode": 0
     },
     "crates/direa-core/src/adapter.rs": {
-      "sha256": "dc5191cba5bdefca6d9401e71d97b8e103661108da7221735ccd472245d9e94c",
+      "sha256": "373821bf2cd1828590851ae56440632a3dbeabe825a15b539f412a19dd089ee1",
       "mode": 0
     },
     "crates/direa-core/src/asar.rs": {
-      "sha256": "88e76f623c5af5fee219384851b41bd63eafbd4bab5d143a932aa986dc424dc0",
+      "sha256": "fc2d771d4e56b96b1dc0d8f0c285db627ad6d776cc351d86ba612c9a366cfa47",
       "mode": 0
     },
     "crates/direa-core/src/buildmeta.rs": {
-      "sha256": "af4c25bc816d6b2ba2b300b780d3bf67d1a14d4887f76fcc2eb4760728755f7b",
+      "sha256": "a4e6a3b47ac7387fdded525ad823883e0cbe8ffc61d8253c8bfebfebf5ce9f9b",
       "mode": 0
     },
     "crates/direa-core/src/canary.rs": {
-      "sha256": "1a499cd5a79dd8189392eee79627575e2ead56a389d689b47cceac4677e3cff7",
+      "sha256": "dfc449f62e9876ef519b1b01678435cc0d850aa3a5a28d1bb719731239e3c4d0",
       "mode": 0
     },
     "crates/direa-core/src/dex.rs": {
-      "sha256": "8c380fe02a7202ffff5703759a8d134e2d4300482b7252505e204aafcbdd3d3d",
+      "sha256": "73fa18f2c295a7a114b42fcf255bddcae0d19c608c95f4bdeafe9781b3741db7",
       "mode": 0
     },
     "crates/direa-core/src/discover.rs": {
-      "sha256": "660c73ed649bcd0c602f45b69b261eb57215472a784e3c72fb9793194d3cbee2",
+      "sha256": "b7e362e1991e1a60f7035c83bb2ddfd5cd5247c28d2eaa837820770d77d86cbc",
       "mode": 0
     },
     "crates/direa-core/src/error.rs": {
-      "sha256": "4ce6e14f6784e3d21b92711608ca450dab4d5a364f79d3695f3a1bdf19107120",
+      "sha256": "bab9d704e116e5ac2ae7dde821177f2adcb5407afa13bc85b91af9ba03981d0c",
       "mode": 0
     },
     "crates/direa-core/src/guard.rs": {
-      "sha256": "60477c007b575cbb110405e8adef2d62441e7e0765a84b2f437e2edee98694f8",
+      "sha256": "c02bd50d85c82d4df6d801646f337f9486e8d704190c58d83dbe400388d381ab",
       "mode": 0
     },
     "crates/direa-core/src/jar.rs": {
-      "sha256": "6239c04922cb8d893237e3f4c967980ba8a58cb0f95d8f7659d2b2f72f576246",
+      "sha256": "d1f0b3a329798c29afd55ef3e6fdfaad5908c2d2845712e210cff1fa9ed13b94",
       "mode": 0
     },
     "crates/direa-core/src/java.rs": {
-      "sha256": "cfa3a97549b42e6774d84fd75af7c01e89347308ced3354b62dd71268799e3c4",
+      "sha256": "285c72372cbfcd08290eb36a160173c62642965fc039332d46e51d814567427f",
       "mode": 0
     },
     "crates/direa-core/src/lib.rs": {
-      "sha256": "5d787fc92edbb07a1579d6ee0d6fb99b38333be608dda9a2606f3d7cc1e6b886",
+      "sha256": "38de0a612c1c24b1925168b3ee987879fc6209611d181c710ff375636ff6e235",
       "mode": 0
     },
     "crates/direa-core/src/manifest.rs": {
-      "sha256": "67c20249dffa82ae5a9abde6884c865edd848c567cd33a5cfc334cfa28caef00",
+      "sha256": "4d298cb8deacc5f001dec7a01862886c90d794a0cc268c5b1b13645934982f2a",
       "mode": 0
     },
     "crates/direa-core/src/native_post.rs": {
-      "sha256": "c03b9e5d88644aa2ebc7093132a4e37df15028e88ee4c1c338cd564ba7b662ba",
+      "sha256": "9d0cb3f046d196dd11a6a37aabb1dda8e660c54d7711f6d09bcbba0df212aafd",
       "mode": 0
     },
     "crates/direa-core/src/planner.rs": {
-      "sha256": "5d6332498de207290d745017130d1e082e0088172963c086178764b322be6d1a",
+      "sha256": "26644efc34b8978b7480b6b73d5cd540577e20e4873970057119a517d2251f2f",
       "mode": 0
     },
     "crates/direa-core/src/policy.rs": {
-      "sha256": "f44e648dfdc72b736d7990c43fd0b066338f46a5578f314238c79f84000fd164",
+      "sha256": "15bff130fc4fbfc8477c78e9d5db91d36037f5603122ca97852d2667eb8c290f",
       "mode": 0
     },
     "crates/direa-core/src/random.rs": {
-      "sha256": "8355d5aa2abbdfbd2d4f89efa762c83a314ff4db3cf253a692d7e2605351a7ad",
+      "sha256": "7b6b5589a3d82a5c78f06df4b90bf306d38de1ec9e1553597b883cd4da5d896b",
       "mode": 0
     },
     "crates/direa-core/src/rrs.rs": {
-      "sha256": "69d4fa0778ef937703d01a04d54a3931b9b8b95dc2568b5e72d73e1e7290719f",
+      "sha256": "181de9fcac726dd97c9a7ff71dc18250adfa74119a589352dc79ad5fa5b53bd2",
       "mode": 0
     },
     "crates/direa-core/src/scan.rs": {
-      "sha256": "caf26cf69d1e939dae215723e95d682409132b5ccda0549d7c4ad52fa6278985",
+      "sha256": "225d6e0cfc84f7a60785e76c952d3dbb5a01bb283df04ad80da6bb986691b568",
       "mode": 0
     },
     "crates/direa-core/src/wasm.rs": {
-      "sha256": "ed5de14816bf20be9e4d759ace2b495a6e0e75dc13c473e775f48ee8d6a4420a",
+      "sha256": "2a979fec76f42022077a711be9cf33c67b3138b5f593d04004012114ed2daf5a",
       "mode": 0
     },
     "crates/direa-core/tests/robustness.rs": {
-      "sha256": "3dc2a5cafc92730b1f92ffa5073c032cf6f1a3192a119b4c5af55c039c3f46e1",
+      "sha256": "db68a89b6603e6462e1cd0cd9d00da1f7ce7a89e485ec227e59817120735c994",
       "mode": 0
     },
     "crates/direa-ffi/Cargo.toml": {
-      "sha256": "c1e87bb8d57ad4f0a6e5c0b34494f7a56c7868b4c96fddff1547b0ae8cbd3c7a",
+      "sha256": "309ba4da699feea4dcac5e836355cb7e4a4dbbe3689321a041c575d0a576277f",
       "mode": 0
     },
     "crates/direa-ffi/direa_ffi.h": {
-      "sha256": "97c9c428844de188a927ab3d19a996932cdfa0fdbb16b28bb4ef0a9a82f714dc",
+      "sha256": "5404033ce8876ce2db41d6a24b6533066a6a0bcac9fb7a3314139248a9a3416d",
       "mode": 0
     },
     "crates/direa-ffi/src/lib.rs": {
-      "sha256": "66c4eef60a4b2a5d2911264389ec2a5341cd697a72d35725d359feef29141d3e",
+      "sha256": "11c29686dc3cab3cd7d1655e62206a5132f0a6967671303f56b8d44b0e3e75e3",
       "mode": 0
     },
     "crates/direa-verify/Cargo.toml": {
-      "sha256": "e0b4eab783d858502a2e7f3eee7e4fdac2c614263570dc09b86c36813f0b5864",
+      "sha256": "c69ca177925551af64dc9a1538f27249df4a4878c4fd659f00ba60f80b631474",
       "mode": 0
     },
     "crates/direa-verify/src/harness.rs": {
-      "sha256": "94dd6953c1932c4c7f4988a7dc760ed24494ab32f33bb1e470c76e5351199e57",
+      "sha256": "d78871e7e32c643a06318128ab97ca0a40683fae6768e5c6b69a18d99e0882de",
       "mode": 0
     },
     "crates/direa-verify/src/lib.rs": {
-      "sha256": "2a6791e4ab6fc8872d26c5125fc0ff098bbcf48b73d5baeadb186b93d758fbea",
+      "sha256": "b8fe6784b086271480db56f3eb8daaf10d752a5f061b652e9a6eeb49e10918f5",
       "mode": 0
     },
     "crates/direa-verify/src/probes.rs": {
-      "sha256": "cde67188bc3952fca4b67eeac605cece9f05444a164743c720124532edba5d12",
+      "sha256": "0d127fbf8fb675de3e192097599baf7cfa55b597b5635a8ab38340040033fa77",
       "mode": 0
     },
     "crates/direa-verify/src/report.rs": {
-      "sha256": "7e01c06ec75f569fd875dcf1bdd1f132eaa3553b35b3ac9bf8d9c91343bd7eeb",
+      "sha256": "ef5e3620a55774be8ec40c03fee95833a40a290c18d80c1bbb06957d2f724568",
       "mode": 0
     },
     "crates/direa-verify/src/runtime.rs": {
-      "sha256": "571d4f2d69625b81f8ab772ef1c8d7c1d0c3ab8dd21577db374b0b4cba06e925",
+      "sha256": "ab0d04a4cfb66d7989c8ba861bda91c55e14a5c01553c602ee6a9cb7771e2a3a",
       "mode": 0
     },
     "docker/Dockerfile": {
-      "sha256": "784e4f5d77f50e32703e2d460384a7332cf1625995f234f57458bc9c03fbc7e3",
+      "sha256": "238fa698e5dfa40b4e7a123d5695d18343417ec5e2608ce6f4a7cbe57909e87a",
       "mode": 0
     },
     "docker/README.md": {
-      "sha256": "1d7db4ecac8cebb41fb78f224c4f38d4a8c1ac6a88c84487ec3d1c28f16d34ff",
+      "sha256": "ff065dba664a20c66dd7b7194bbaf7f2bf2b0324fd73a1e6eac773509efea3a5",
       "mode": 0
     },
     "docker/compose.yml": {
-      "sha256": "2c871820c9947a0c43b973412bfdf5689c43c6a4c9cc19c95f8d8e74734efed3",
+      "sha256": "8ae80bef878496caa1f0fa815c485513dd840b20175256be9bbdcba23b01f507",
       "mode": 0
     },
     "docker/entrypoint.sh": {
-      "sha256": "f4ce5952d390b670d2cc25d3075a6733a09f2ddb589b5e89abefab3b3bb00c44",
+      "sha256": "04f0d1b4f72da4ffe8a4c8e927c380d4e112d1257e9012550e945cc09f90388a",
       "mode": 493
     },
     "docs/ADAPTERS.md": {
-      "sha256": "5c420f7c3f4e2f896ca171e08694d1383eb590df14ddbdba86b041ebc22216d5",
+      "sha256": "c6b0142ef94a050875f0d5bc1c3311fc1505e71b8590e040f7d5ec865ddf8c05",
       "mode": 0
     },
     "docs/CONTINUATION.md": {
-      "sha256": "a0497f848dfeed58d93d221a1caa919200cc408f7a43cc524b00ad1ef329049d",
+      "sha256": "42bb79cc7aa461594fc8a7b8f48ec9934fd65c26714c6b3a66c5ef3919fbe6a6",
       "mode": 0
     },
     "docs/ETHICS.md": {
-      "sha256": "557c2b64e29f620681619504b0a7a3ba905b9006564d4cc730ab1a8d5658dbf5",
+      "sha256": "5730d8b34efc27103e75c218390cb9927e490cd1cbc8c540a5575dc4c3ccb74b",
       "mode": 0
     },
     "docs/PIGGYBACK.md": {
-      "sha256": "cfc7ff57b670e8d7dd814b5bc812044e0eb5789549463afdd7353e43a2a45aca",
+      "sha256": "9b317a2aa30d55db5d96bf98ac413636d7d0af8c7233fed5bc624d656336cadd",
       "mode": 0
     },
     "docs/RANDOMIZATION.md": {
-      "sha256": "0ec76affc654d435de45beb708b5e3f7b2e6af868631c1a65eb8c50f56d0e1c1",
+      "sha256": "1a46d43b5ade0837e920e5da6f8282ec04c1d3ae5591bcf89d95379555ebde54",
       "mode": 0
     },
     "docs/REA-PIPELINE.md": {
-      "sha256": "db35571a13b682920ac848698408c1505e7ac6b6cdc8ab913cfb7e3ac73e7b97",
+      "sha256": "cf84aa772bd0ddd4ec445b228292c5976e9a8b524360ba016e7adf54bba8a013",
       "mode": 0
     },
     "docs/README.md": {
-      "sha256": "f3fa89c212a79c5f96558acbd130b9477f742f2d3537e73a261c0cd6b35d3897",
+      "sha256": "1544528b7cfeef24b29cf060bee69800187507caf93d07a762de5ac41c412101",
       "mode": 0
     },
     "docs/RELEASING.md": {
-      "sha256": "e0713d108ec33c3fe04b732c2164ec9e500f1c41023286b1eab5d2654d1bbbeb",
+      "sha256": "02124076f352745579f99345933566cdb667df5c2e48f429bd07aa39b7ce9853",
       "mode": 0
     },
     "docs/RRS.md": {
-      "sha256": "b01dd7eec5df0acc656240540e2d207ae07be620e016e265a8d5635d1d74178f",
+      "sha256": "7b1085aaff7b1b6beb5964de3c23732fe1a8a4ecad6c172e34c4c90e02410064",
       "mode": 0
     },
     "docs/RUNTIME.md": {
-      "sha256": "a804f6715198b8ea6fa38d46bfc5d14b78d224c94aa877dbdf87e787678d429f",
+      "sha256": "6fdc6b85429c41a0a35b7387252853d098476550d398e9601ff0719ed4613a82",
       "mode": 0
     },
     "docs/TARPITS.md": {
-      "sha256": "36b62b610107d5769a71cb3b26dccd0ceb0f58fc03f10ebd4c366891fe3d082e",
+      "sha256": "4d9e1de0b14ee54e7a3d3b2452a8655df2b665a1b89ac86cb6a115d5a870310b",
       "mode": 0
     },
     "docs/THREAT-MODEL.md": {
-      "sha256": "fc9c8932833276ae175b49bdee6bf2bb09a30cd4b88593d06f285fd00ac28c3e",
+      "sha256": "94c1d834ecd55c32709fae4b9d0757959b5a52a6e0c8a247225ef574ad4527f0",
       "mode": 0
     },
     "docs/adr/0000-template.md": {
-      "sha256": "74984bbc73b2739ee175156dd07b48aa3718dc2673e78300956a09ee2cd0da2c",
+      "sha256": "1323095b989e0064d14dc466cdd5e72dcfc84c713964cfc2b96e8389e6d17de9",
       "mode": 0
     },
     "docs/adr/ADR-0001-local-only-read-only.md": {
-      "sha256": "2ac58b2f85fb789942cd13c56f4058402f01cc410aa362a46385a5ce2dea3fa4",
+      "sha256": "5ba854d7e627eb09880a98fb87e1ea1cc5644e90b3fe9cca15860c97d18fe801",
       "mode": 0
     },
     "docs/adr/ADR-0002-adapter-subprocess-protocol.md": {
-      "sha256": "a9a4d254ae7692b34a55865fc9078296076923abd3274f0d69206e0e7eab246b",
+      "sha256": "818ac51a80745eebce19c8fbc48c13f956efa5b180df796a7afd73f689e86d3f",
       "mode": 0
     },
     "docs/adr/ADR-0003-deterministic-randomization.md": {
-      "sha256": "6c01cdcb54777e25e52cb7c898ba455d07023f509473e4e766ae37d5aed9771e",
+      "sha256": "400eab6f9094ee7f784978ab0a9d08cdf763eb8a89d468c72ccd88748e2f0a52",
       "mode": 0
     },
     "docs/adr/ADR-0004-measure-with-rrs.md": {
-      "sha256": "77eceebd35d9eb3d1df37d6e8910a2e4b290246f59cd2c7d7159d65be279f153",
+      "sha256": "87bd38fe09f5a246b24b75d3a37afd5f83b0eb34e0fc454f16e625f69b73bc9b",
       "mode": 0
     },
     "docs/adr/ADR-0005-signal-to-noise-and-skip-axes.md": {
-      "sha256": "32ba43c59f3b622e5fb2b7a7b83bcee2c28524be7771899a30436d26145c1bd6",
+      "sha256": "4faf4bab4b0e5a392250f1bd2e112cba56417ed964079bc00e1cc15b2cbb5a46",
       "mode": 0
     },
     "docs/adr/ADR-0006-honest-agent-defense.md": {
-      "sha256": "7692e071f11fe32b54d912fd035f4d93d4a85a9d7364e7cdd342e9cc2057a9d7",
+      "sha256": "1990be1f0c9397037c1f31e23afa797c769c6ec31b32b3c612e97b6f36c98072",
       "mode": 0
     },
     "docs/adr/ADR-0007-mit-core-subprocess-boundary.md": {
-      "sha256": "452c49d20280eeef3a096eb6600755d21edff063939c202b9fa50930fd4e4c75",
+      "sha256": "a4d4715b2405dd8ff6b73642df890f244fd73b51791e1e3cf2ab7a0804a3a659",
       "mode": 0
     },
     "docs/adr/ADR-0008-native-post-in-process.md": {
-      "sha256": "3bb9489f87e053094ba4abeb72ac53598b606a09703c28b69f798f43b4c7fcae",
+      "sha256": "644db61f5dd93d184bcdafd2e668c8f6c98af5a4ff16e49198120b984236a0f3",
       "mode": 0
     },
     "docs/adr/ADR-0009-build-executes-external-adapters.md": {
-      "sha256": "4cce746cfbe4ae52c6b23414dfeb874dd64249b29aaabd672369579917b403e5",
+      "sha256": "39d5b8775de70bf0f5cb55bf4a9b6a2db615169115ca6ae1050b3471f52669aa",
       "mode": 0
     },
     "docs/adr/ADR-0010-strings-axis-counts-tokens.md": {
-      "sha256": "3b290b64f6e89053ad5af170abee13db36a799de14f6ed121b36027323c67d35",
+      "sha256": "07e709b728dede7f3df2d876731e30271fe62915c07bfc38f80c2449d8027a98",
       "mode": 0
     },
     "docs/adr/ADR-0011-string-exposure-measures-verbatim-survival.md": {
-      "sha256": "54944a7c0cefd6f077c50c46b20e9a2ba17c31a06782f84518329ed8cd52bfef",
+      "sha256": "56a619a0f01b5ff9914c5c83a90025a55fb704f7bb05cd3d0125c9137a056b3e",
       "mode": 0
     },
     "docs/adr/ADR-0012-build-never-overwrites-source.md": {
-      "sha256": "e6f7952363340ef027094e962add8531de9c98afee982a53f64123cb34f76f56",
+      "sha256": "e64b638c1eb4de0463686516d99a2adc82daad46323e3ce03d03db01423edce2",
       "mode": 0
     },
     "docs/adr/ADR-0013-post-build-health-check.md": {
-      "sha256": "19090c0e003b35f21f569f9274d68931f0ea0411ed0e9f2c73e32a9794e6810c",
+      "sha256": "10bcf3fa14fa944e7c4e75b6d56941cccb9e5c463d4e4ef26d0ef7b7948309d9",
       "mode": 0
     },
     "docs/adr/ADR-0014-runtime-instrumentation-measured-from-environment.md": {
-      "sha256": "cc06bf8d23336a7159945af16b4695ee15e12bef7aa56e42ce473265b7d200f7",
+      "sha256": "77dab48596993c184253747313dd15e19a4adccbbda0fc9b735864881cc499ff",
       "mode": 0
     },
     "docs/adr/ADR-0015-docker-toolchain.md": {
-      "sha256": "7d3ebb749ad6a3da11d59d88cc50d1287766ed9dc88a871a6302a6c6cf260acb",
+      "sha256": "e2716ee16c98e3ac9b5ead1db13640fa9ce95b6c5c0a6f1f616be29f9f416294",
       "mode": 0
     },
     "docs/adr/ADR-0016-bound-deceptive-decoys.md": {
-      "sha256": "3bfafdfc14934014f1526fd1def04f92bab8aad6a3874b0cf775e9f06750df6b",
+      "sha256": "931af2751d8518bdcc8e7d17eaf96be0c3f1ad49c16354cfd5df9a843e251c1a",
       "mode": 0
     },
     "docs/adr/ADR-0017-control-flow-axis-is-external.md": {
-      "sha256": "dca6ba3db2668c7e986b444397f3d95d32d9e3438ec6825493975ee074105c33",
+      "sha256": "d129728aa8a10ef11a300dad29c0a625a9075e4bd108959d363fdae0d3384cbd",
       "mode": 0
     },
     "docs/adr/ADR-0018-native-guard-is-link-time.md": {
-      "sha256": "1267379747c147df86e6247de4673f49cfc9ea0cdc2801236df2cdef3c84370a",
+      "sha256": "b6235f4475db9dcaa61ea1f389be152ea8cbec5505adb8398c4e03673739d78c",
       "mode": 0
     },
     "docs/adr/ADR-0019-remove-agent-deception-axis.md": {
-      "sha256": "dedb5193d44457e479abf115de7d0847cbe02adbd43be17670843f3052798994",
+      "sha256": "d75d035d56c0e62fb29e247982fc7f1c2c76578dfa15165acf3c42ddf38b08de",
       "mode": 0
     },
     "docs/adr/ADR-0020-canary-detector-normalizes-before-matching.md": {
-      "sha256": "cc093c9a6b8b83ad9dc26ff1897b81e93e556c8e0ad37c906320c0fb819ecf89",
+      "sha256": "0d4d8c972ceeb246a552326b406add6440410fc798aa056b001cbef4bffb2819",
       "mode": 0
     },
     "docs/adr/ADR-0021-oss-eval-harness-uses-network.md": {
-      "sha256": "dc41004f3a6a783b751324a683d3fb75dd8626c6ac03ce349301645e59eb77b4",
+      "sha256": "4f28735f9978c3b5d6b839b7e48c4ad24ca3e98ec4f1bc076744b583f3819d72",
       "mode": 0
     },
     "docs/adr/README.md": {
-      "sha256": "426cd66d3f55dfc4de7c36c8bdd29602a557ce61c6d64e5d5642618f4434a8e0",
+      "sha256": "2a87307475ed81d5fadfb33215cf31ef83847d8ca52022beddb6683f3cbaa19f",
       "mode": 0
     },
     "eval/Dockerfile": {
-      "sha256": "da52c850dbdccf31d2722a5556bc58d02a622a4fe9e107ba389f1d2534bdb613",
+      "sha256": "40fefaa901f89971f39517646e9a2b6948c07f35ba4ad6af37f94e7a3fc87ace",
       "mode": 0
     },
     "eval/README.md": {
-      "sha256": "6837d28f92879ca03da2793fa8c3612f9430eb8d9c65bcf0f851075d073541f8",
+      "sha256": "72c8b5657ec343d82c98891588e55d742e61918953f60fe7366c4bedd53cf8eb",
       "mode": 0
     },
     "eval/entrypoint.sh": {
-      "sha256": "92fd85be5cfd78cd8ef38a8e37a539102b5c1517e87fd5360a65f971d7fd5bdc",
+      "sha256": "a697201fb07dbc672becc796ce5673088c840af8fe5299a4b37249ed266c9c09",
       "mode": 493
     },
     "eval/repos/asar.sh": {
-      "sha256": "59a2a5df6fc610fff4f912fe27114f6e3d35abf734838a10857548ff0fe789fd",
+      "sha256": "2c2c594c45029646476d26409e352053de37ef4c556e40b441e03f699c648ca7",
       "mode": 0
     },
     "eval/repos/axios.sh": {
-      "sha256": "d2b0142021113cee24717f7007434414a59c8e5a622ebfaef55a817e45f945bc",
+      "sha256": "913d45e2eb8a749f352455ea19d293309b5fb42384aa5aacd83aa072ce461d90",
       "mode": 0
     },
     "eval/repos/fd.sh": {
-      "sha256": "6dce3b4a7edfac09c2bbba352848abda1d26c578803a3e8212a35766799b937f",
+      "sha256": "0088bf442599fa87ed7e221098f8110f5f21f4add096e87bc8b74361f68c3d38",
       "mode": 0
     },
     "eval/repos/fzf.sh": {
-      "sha256": "86a6593ee5aca47f6835678d786b94f105fa4d73d83bb3071dcc17e3f8a5c644",
+      "sha256": "bb499006e6633f197282998246ac8118234165c927ef1c63bc4462ca2c9a52f6",
       "mode": 0
     },
     "eval/repos/gson.sh": {
-      "sha256": "111388666bee6040a2bfd67f01125b4b0b0a592a435f72fa0869d69c65d1218c",
+      "sha256": "3090149b035b4c83bb37f9b01c975d9c8f1e3c6165fc2bbd9b22554e3288fbfb",
       "mode": 0
     },
     "eval/repos/jq.sh": {
-      "sha256": "68beff5f48e16e3f890b448c0774877013ffb9ba3a7452964783a569f48488d3",
+      "sha256": "a4ca3219894c7331b14dcd69792e57411645e944ab43fd0a123f453eb10eb71c",
       "mode": 0
     },
     "eval/repos/newtonsoft.sh": {
-      "sha256": "92ea57bd1360bf2903ce988d305296d5489ba3bcc40d38542a476f4e08547957",
+      "sha256": "3a63cce895c396ea342a1cb94d6fef6a9db2724f18c040352e4679f1008263b6",
       "mode": 0
     },
     "eval/repos/sqljs.sh": {
-      "sha256": "4abcc8e0313ef92dedba0ed93b55114ab19d7281d917278a4b74247b4112d37d",
+      "sha256": "a7c91dd218d3d06206bcd2d86d403a108b5b5559b4ea53fd13c9a2d07a51b913",
       "mode": 0
     },
     "eval/repos/termux.sh": {
-      "sha256": "d8aa3658df5b8a6d89abb02cb5fd518854ca8d7d3f53cbf7da911917302df28b",
+      "sha256": "f20f4f6fbfdea02f6054a0e4bb60be26a8aebe246bc434fc6dc2bb3d5e019878",
       "mode": 0
     },
     "eval/run.sh": {
-      "sha256": "e16832548e9f0abe9d7130e7613384f81ebaf75048a22c901d33d060214b7591",
+      "sha256": "8b5f6a81ec9c45e57f21bada259ad06940caa2ea1308f41dfebbc3cc52642fcb",
       "mode": 493
     },
     "examples/die-a-rea.toml": {
-      "sha256": "c3862682883e6053bb412fd172466a915e8e5f6dedc241291bb79d880e073a92",
+      "sha256": "69e931297316aad4fb22c3e6311f137b28b1b1127fd240dbf1efaf66c82619e9",
       "mode": 0
     },
     "policies/high.toml": {
-      "sha256": "17a4c05b61ca86afbb797efc98fc9ca9804988108af838d71201097161c4c997",
+      "sha256": "bc96ef5370925d9ad0dfae590816a753877ed4e3ae8d6c1c268223035e6d9ce5",
       "mode": 0
     },
     "policies/low.toml": {
-      "sha256": "aeff17c1e8212c4b9d30d23829f897ef338a69821e797ef2259513fb4ce5ee30",
+      "sha256": "b3c2cbc17068e038183fd780509c07aeb7a697e2027508033daf0a9145a96821",
       "mode": 0
     },
     "policies/medium.toml": {
-      "sha256": "09a8c14a0607448628f717b8699b84bc46a617a23682cb59395da0b0d055c052",
+      "sha256": "a84d1be33aaf72c7f3dcaa1f1cb27a4ff050221d7d284b84768730ae9b20fcfb",
       "mode": 0
     },
     "policies/paranoid.toml": {
-      "sha256": "5f7ca6d7460e1676dbe1581739e01eefabc82cc4883bf0497bc17302d188723b",
+      "sha256": "a6a360fea6ae46f59b29485483639155890ae0ee20c79fba14a07f71c77e40dd",
       "mode": 0
     },
     "runtime/guard/direa_guard.c": {
-      "sha256": "c9fea368acca1b8055930d70344a5eb29d8197e8c4d9d04870896e4fce3c1e60",
+      "sha256": "50021227e46a22081df47029c232c65ebdd8caeb4c15f26f69a2b95518667167",
       "mode": 0
     },
     "runtime/guard/direa_guard.h": {
-      "sha256": "ddc3932cd545c3eedc62092e6ced32350295022ebd7e7e5cee58a2b016e981c3",
+      "sha256": "20e7f16edfd05e37ec2e35b96ef89b859f39fb7c77549d61e3d87af2fa2edb8f",
       "mode": 0
     },
     "testbowl": {
-      "sha256": "d538b34c35a4c4a8767291c8ca3778588e37caf6aa1eb2491fb52c06f39e580e",
+      "sha256": "6659f1b156764bf886ea69decb82e351002bcdd3d760277dd93f3da647492ba8",
       "mode": 493
     },
     "tools/controlflow-count": {
-      "sha256": "cf138dba26b653e38c9ece4274ba67376ba2c0ba0ee8685c656d15719d7a82cf",
+      "sha256": "2a9b25c32dc867276d5e2cc0e8ba0c7ae6cb277f07fff68cefb68825c57c1c34",
       "mode": 493
     },
     "tools/docs-check.sh": {
-      "sha256": "49882ee5ebe84e88b42fe88cdc38a8b377cd5f04c86f7d51a96b55ffe524c27e",
+      "sha256": "427b8103ab5e7e83928c9e6732c3467a784e2861528f1d85ab01f940edc07446",
       "mode": 493
     }
-  }
+  },
+  "hashConvention": "Git archive with core.autocrlf=false; text checkouts normalize CRLF to LF for comparison"
 }

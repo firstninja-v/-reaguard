@@ -1,124 +1,96 @@
 # REAguard
 
-**JavaScript release hardening with compatibility checks.**
+![REAguard — Build. Harden. Verify.](assets/reaguard-banner.png)
 
-[![Tests](https://github.com/firstninja-v/-reaguard/actions/workflows/test.yml/badge.svg)](https://github.com/firstninja-v/-reaguard/actions/workflows/test.yml)
+**Software hardening with an attributed Rust engine and a cautious JavaScript workflow.**
+
+[![JavaScript & browser tests](https://github.com/firstninja-v/-reaguard/actions/workflows/test.yml/badge.svg)](https://github.com/firstninja-v/-reaguard/actions/workflows/test.yml)
+[![Engine tests](https://github.com/firstninja-v/-reaguard/actions/workflows/engine.yml/badge.svg)](https://github.com/firstninja-v/-reaguard/actions/workflows/engine.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Minify a bundle. Preview the changes. Test the result. Verify what you ship.
+REAguard combines the complete MIT-licensed [die-a-rea](https://github.com/danihelenterprises/die-a-rea) toolkit with our parser-based JavaScript packaging, browser compatibility fixtures, upstream provenance checks, and targeted safety fixes. **Version 0.3.0 is experimental.** No software is uncopyable, and no transform is guaranteed to preserve every application.
 
-The complete MIT-licensed upstream Rust toolkit is now included under
-[`engine/`](engine/README.md), pinned and attributed in [UPSTREAM.json](UPSTREAM.json)
-and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Integration work is in progress;
-the JavaScript workflow below remains available.
+## Choose your workflow
 
-**0.2.0 — experimental, JavaScript only.** REAguard reduces readable formatting and can optionally rename local identifiers or add synthetic comments. It has **not** demonstrated resistance to AI cloning. It is not a replacement for a multi-platform obfuscator, access control, or keeping secrets on a server.
+| Workflow | Use it for | Requirements |
+| --- | --- | --- |
+| `reaguard engine …` | Original multi-format toolkit: native files, JS/Electron, WASM, JVM/Android, manifests, adapters, RRS reports | Node.js 22+, current stable Rust; optional toolchains for adapters |
+| `reaguard plan/build/verify …` | Conservative packaging of one self-contained JavaScript bundle | Node.js 22+ |
 
-## Quick start
+The original engine's commands and formats remain available; the two workflows have **different options, defaults and verification semantics**. Engine RRS is a heuristic exposure report, not a measured probability of stopping AI cloning. JS verification compares unsigned hashes; it does not certify behavior.
 
-Requires Node.js 22 or newer. Start with the included fixture, not your live deployment.
+## Install and try the full engine
 
 ```sh
 git clone https://github.com/firstninja-v/-reaguard.git reaguard
 cd reaguard
 npm ci --ignore-scripts
+npm run engine:build
+npm link
+reaguard engine doctor
+```
+
+Install Rust from [rustup.rs](https://rustup.rs/) if Cargo is missing. The engine is built from source; no automatic binary download occurs. On Windows, Rust may require Visual Studio C++ build tools. `npm link` creates the command locally; without it, run `node /absolute/path/to/reaguard/src/cli.js engine …`.
+
+From the directory containing the software you own or are authorized to protect:
+
+```sh
+reaguard engine init --name my-app dist/app.js
+# Review die-a-rea.toml before building; start with profile="low".
+reaguard engine plan
+reaguard engine build --out dist-hardened
+reaguard engine verify --original dist/app.js --hardened dist-hardened/dist/app.js --json
+```
+
+The default manifest is intentionally still named `die-a-rea.toml`. Review the generated configuration: use low intensity first, disable randomization/tarpits unless needed, and enable application-specific verification. Higher profiles, adapters and runtime guards may alter behavior, size, startup time or antivirus reputation. Signing-sensitive artifacts must be re-signed after modification.
+
+See [engine setup, profiles and adapters](docs/ENGINE.md) for a concrete cautious configuration. Full upstream documentation is retained in [engine/README.md](engine/README.md), including all advanced features and limitations.
+
+## Quick JavaScript-only demo
+
+No Rust installation is needed for this workflow:
+
+```sh
 npm test
 node src/cli.js plan examples/calculator.cjs
 node src/cli.js build examples/calculator.cjs --out release-demo
 node src/cli.js verify release-demo
 ```
 
-Compare behavior:
+This lane defaults to no identifier renaming, compression or decoys. It writes a new directory and preserves the source. It detects common dependency/path hazards, checks final syntax, records module type, and supports a user-provided application check. [JavaScript guide and CLI reference](docs/JAVASCRIPT.md).
+
+## What REAguard adds
+
+- A single branded entry point without silently renaming upstream protocols or manifests.
+- Fixes for line-based JS cleanup that deleted real marker-containing code or template data; ambiguous input is preserved rather than guessed at.
+- A CommonJS boundary so imported Node adapters keep working inside our ES-module repository.
+- A separate parser-based JavaScript lane with cautious defaults and optional shell-free application validation.
+- Regression, native smoke and browser pixel/interaction tests; reproducible upstream file/patch inventories.
+
+These are specific engineering improvements, **not proof of stronger anti-cloning effectiveness**. We do not modify RRS weights to produce a more flattering score.
+
+## Will my app still work?
+
+Always test the produced artifacts with your own application's test suite and deployment pipeline. Our browser fixtures exercise clicks, forms, styling, screenshots and state; they cannot certify every framework or product. Keep the original release for rollback.
+
+Neither workflow automatically updates HTML/CSS, chunk references, CSP/SRI hashes, service-worker manifests or code signatures. The JS lane does not copy dependencies/assets. Advanced engine options retain upstream behavior, including an explicit force-overwrite option; choose a fresh output directory and avoid `--force` during normal use.
+
+## Test and contribute
 
 ```sh
-node -e "console.log(require('./examples/calculator.cjs').total([{price:19.95,quantity:3}],0.1))"
-node -e "console.log(require('./release-demo/calculator.cjs').total([{price:19.95,quantity:3}],0.1))"
-```
-
-Both print `53.86`. Verification reports `"valid": true`. Each build needs a **new output directory** whose parent exists. Rerunning with the same directory fails rather than replacing it.
-
-## Will it change my code or UI?
-
-REAguard does not write to the input bundle. It writes a separate artifact, `package.json`, and `manifest.json`. It does not edit HTML, CSS, images, or your source repository.
-
-The output JavaScript is reformatted. **No transform can promise compatibility with every application.** By default, compression and identifier renaming are disabled; function/class names, properties, and license comments are retained. Both input and final output are parsed. Optional synthetic data is a comment, so it creates no runtime array, global variables, calls, or changed evaluation result.
-
-We test a browser fixture before and after transformation, comparing rendered pixels, DOM state, styles, click and keyboard behavior, forms, Unicode text, and local storage. The tests cover classic scripts and modules with renaming on/off in Chromium, Firefox, and WebKit. These tests do not establish compatibility with your app or every framework.
-
-### Safe deployment workflow
-
-1. Produce a **self-contained JavaScript bundle** with your existing build system. REAguard does not bundle dependencies or copy assets.
-2. Run `plan`. It performs the full parse/transform preflight and reports exact byte counts without writing anything.
-3. Build to a new directory. Test that output with your application's existing tests before deployment.
-4. Deploy using your existing asset pipeline. Recompute content hashes, SRI attributes and CSP hashes where applicable; preserve chunk paths, cache manifests and service-worker entries. REAguard does not update those references.
-5. Keep the original release for rollback. Verify the packaged artifact against a trusted manifest.
-
-Imports, non-built-in `require` calls, dynamic imports, `import.meta`, Node location variables and common resource-loading constructs are rejected by default. This is a conservative syntax scan, not complete dependency analysis: aliases, framework loaders, string-generated paths and custom loaders can evade it. `--allow-external` bypasses those checks only when you have verified deployment paths yourself; warnings remain in the report.
-
-`.mjs` uses module mode; `.cjs` uses CommonJS. For ESM `.js`, pass `--module` explicitly. The generated package metadata records the selected mode so Node does not inherit a different type at the output location. Browser deployment must retain the correct `<script type="module">` attribute.
-
-### Optional application check
-
-`--check` accepts a JSON array of executable and arguments, runs without a shell in the output directory, and must exit successfully within 30 seconds. `{artifact}` and `{out}` expand to absolute paths. The check can run arbitrary code: use a check you trust. Failed checks remove generated files where possible; unrelated files produced by a check are left intact.
-
-POSIX shell / PowerShell example:
-
-```sh
-node src/cli.js build examples/calculator.cjs --out release-checked --check '["node","--check","{artifact}"]'
-```
-
-This example is a Node syntax check, **not an application behavior test**. Substitute your actual test executable and arguments. Without `--check`, the manifest explicitly records `applicationCheck: "not-run"`. A successful custom check is recorded as `passed`; REAguard does not assess its test coverage.
-
-## Options
-
-| Command / option | Behavior | Default |
-| --- | --- | --- |
-| `plan <file>` | Full preflight and size estimate; no writes | — |
-| `build <file> --out <directory>` | Write a new release | — |
-| `verify <directory>` | Check artifact and generated package metadata hashes | — |
-| `--mangle` | Opt into local identifier renaming | Off |
-| `--module` | ES module semantics for `.js` | Off; automatic for `.mjs` |
-| `--decoys N` | Append 0–4096 synthetic records in a comment | `0` |
-| `--seed TEXT` | Deterministic seed, 1–256 characters | `release` |
-| `--max-growth BYTES` | Synthetic-comment budget, 0–1048576 bytes | `262144` |
-| `--allow-external` | Acknowledge and bypass dependency/path warnings | Off |
-| `--check JSON_ARGV` | Run a trusted validation command after writing | Not run |
-| `--version` / `--help` | Version / usage | — |
-
-Inputs must be valid UTF-8, regular files up to 16 MiB; symlinks are rejected. Build errors and failed verification exit with status 1. Results and errors are JSON. Options not applicable to a command are rejected.
-
-`--mangle` can affect parameter-name reflection and dependency injection; test before enabling it. Formatting changes affect function source strings, stack locations, signatures and checksums even with renaming disabled. Existing source maps are not regenerated. Preserve required third-party notices when deploying.
-
-## Dummy data: experiment, not a security boundary
-
-```sh
-node src/cli.js build examples/calculator.cjs --out release-experiment --decoys 64 --seed demo
-```
-
-Synthetic records are deliberately non-executable and explicitly labeled. They increase download size and parsing/scanning work, and can be trivially stripped. They do not encrypt logic or prove resistance to copying. We removed executable dummy arrays because they changed JavaScript completion values and added unnecessary runtime work. No prompt injection or debugger traps are inserted.
-
-## Verification limits
-
-SHA-256 checks establish consistency with an **unsigned manifest**, not publisher identity or application correctness. An attacker able to replace both files can recompute the hashes. Keep manifests in trusted storage or authenticate them separately. Legacy version-1 manifests remain readable but do not cover package metadata.
-
-## Development and evidence
-
-```sh
-npm ci --ignore-scripts
 npm test
+npm run upstream:check
+npm run engine:test
 npx playwright install chromium firefox webkit
 npm run test:browser
 ```
 
-See [VALIDATION.md](docs/VALIDATION.md) for the tested scope and exclusions. CI runs Node tests on Windows/Linux and Node 22/24, plus browser tests on Linux. A green CI badge is compatibility evidence for the fixtures, not a protection score.
+The Engine workflow builds/tests Rust, checks formatting/lints and runs the engine bridge smoke tests. Linux also runs documentation invariants, benchmark gates and a real compiled native sample. External obfuscators, every platform-specific signing flow and arbitrary real products require additional validation.
 
-- [Architecture](docs/ARCHITECTURE.md)
-- [Roadmap](ROADMAP.md) and [contributing](CONTRIBUTING.md)
-- [Security reporting](SECURITY.md)
-- [Release checklist](docs/RELEASE.md)
+[Validation scope](docs/VALIDATION.md) · [Architecture](docs/ARCHITECTURE.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md)
 
-## License and dependencies
+## Attribution and license
 
-[MIT](LICENSE). Terser handles printing/minification; Acorn handles syntax and preflight inspection. Playwright is a development dependency. See [third-party notices](THIRD_PARTY_NOTICES.md). The repository is public; `private: true` only prevents accidental npm publication.
+MIT. The imported engine is copyright © 2026 die-a-rea contributors; its [original license](engine/LICENSE) is retained. REAguard additions use the [root license](LICENSE). [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), [UPSTREAM.json](UPSTREAM.json) and [UPSTREAM_PATCHES.json](UPSTREAM_PATCHES.json) document the source and changes. This is an attributed integration, not a claim that we independently invented the upstream engine.
 
-Found a bug? [Open an issue](https://github.com/firstninja-v/-reaguard/issues) with a minimal synthetic reproduction. Useful contributions include framework fixtures and honest performance/analysis benchmarks.
+If REAguard helps your workflow, star the repository or contribute a compatibility fixture and reproducible benchmark.

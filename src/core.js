@@ -6,7 +6,7 @@ import { spawn } from 'node:child_process';
 import { isBuiltin } from 'node:module';
 import path from 'node:path';
 
-export const VERSION = '0.2.0';
+export const VERSION = '0.3.0';
 const MAX_SOURCE = 16 * 1024 * 1024;
 const MAX_OUTPUT = MAX_SOURCE * 8;
 export const digest = data => createHash('sha256').update(data).digest('hex');

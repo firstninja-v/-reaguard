@@ -154,3 +154,10 @@ registry in `crates/direa-core/src/planner.rs`, and the absence of a git remote
 - **B-041 (Closed, commit 43):** the canary detector normalizes before matching
   and the gauntlet carries a red-team evasion corpus a naive matcher misses
   (ADR-0020, K-044).
+
+## REAguard integration items
+
+| ID | Item | Severity | Area/Milestone | Status | Notes |
+|---|---|---|---|---|---|
+| B-062 | Preserve real JavaScript during line-based cleanup | High | CLI | Closed | Conservative fallback, policy-aware map directives and license preservation; ADR-0022, K-063. |
+| B-063 | Support the current Rust lint toolchain and Node package boundary | Low | Integration | Closed | Equivalent byte-string spelling for Clippy; explicit CommonJS package context for upstream adapters; K-064. |

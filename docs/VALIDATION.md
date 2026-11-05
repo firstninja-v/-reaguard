@@ -1,4 +1,4 @@
-# Validation scope — 0.2.0
+# Validation scope — 0.3.0
 
 This document records what is tested, not a promise that arbitrary applications are compatible.
 
@@ -17,7 +17,7 @@ Local Windows validation: all eight Chromium/WebKit cases passed. Firefox could 
 ## Not established
 
 - React/Vue/Angular/Next.js compatibility across versions, bundlers or deployment environments.
-- Native executables, Python, mobile packages, source TypeScript or JSX.
+- Python/source TypeScript/JSX; every native/mobile format and optional external engine toolchain on real production artifacts.
 - Correct relocation of multi-file apps, chunks, assets, runtime imports, worker scripts, service workers, SRI/CSP hashes or CDN caches.
 - Protection against AI cloning, resistance to a skilled reverse engineer, or a measured security improvement over minification alone.
 - Universal UI preservation, source-reflection compatibility, absence of every vulnerability, or zero overhead.
@@ -27,3 +27,7 @@ Local Windows validation: all eight Chromium/WebKit cases passed. Firefox could 
 Show the included fixture and describe this as experimental JavaScript packaging. Demonstrate that the original is unchanged, execute the output, and show the manifest's application-check status. Do not describe a hash check as a behavior test or label synthetic data as encryption.
 
 For a real product, use its own unit/integration/browser tests against the transformed release and its actual deployment configuration. A successful fixture demo is not a substitute.
+
+## Imported engine
+
+The original Rust test suite passed on Linux after the CommonJS package-boundary fix. The Engine workflow validates our patched snapshot with build, unit/integration tests, formatting and Clippy, plus JS behavior and static report smoke tests through the new launcher. Linux also tests a compiled C executable before/after native hardening, docs invariants, canary detection and benchmark gates. Consult the actual workflow for platform results. Source inclusion is not evidence that every external toolchain has been exercised. The root browser suite covers the parser-based JS lane, not every Rust engine protection profile.

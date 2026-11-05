@@ -1,5 +1,9 @@
 # Architecture
 
+REAguard has two explicit lanes. The `engine` subcommand launches the attributed Rust toolkit with unchanged arguments and working directory, without a shell. The Rust engine owns its manifest, adapters and RRS semantics. All other commands use the independent JS packaging lane described below. Upstream names and copyrights remain intentional. See [ENGINE.md](ENGINE.md).
+
+# JavaScript lane architecture
+
 REAguard processes one self-contained JavaScript bundle. It is not a site bundler or a native executable protector.
 
 1. Validate typed options and file limits; reject input symlinks and malformed UTF-8.

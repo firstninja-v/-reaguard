@@ -39,3 +39,5 @@ file, id `ADR-NNNN`, never reused.
 | [ADR-0021](ADR-0021-oss-eval-harness-uses-network.md) | The OSS eval harness may use network; the product stays local-only | Accepted |
 
 Template: [0000-template.md](0000-template.md).
+
+| [ADR-0022](ADR-0022-conservative-javascript-cleanup.md) | Preserve ambiguous JavaScript during built-in cleanup | Accepted |

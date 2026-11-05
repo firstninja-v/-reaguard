@@ -2,6 +2,13 @@
 
 # die-a-rea
 
+> **REAguard integration:** This attributed engine snapshot is shipped inside
+> REAguard. The original commands, manifest names and adapter protocol are retained.
+> Built-in JavaScript cleanup now preserves ambiguous templates, escapes and block
+> comments; it removes only standalone map directives when enabled and retains
+> recognized license comments. See [ADR-0022](docs/adr/ADR-0022-conservative-javascript-cleanup.md).
+> Parser-based JavaScript packaging is also available through REAguard's root CLI.
+
 **D.I.E.** — **D**ecompiler **I**nterference **E**ngine
 **A. - R.E.A** — **A**nti-**R**everse-**E**ngineer **A**nything
 

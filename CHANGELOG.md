@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0
+
+- Import the full attributed Rust engine, adapters, runtime, benchmarks and documentation at a pinned upstream commit.
+- Add `engine` command forwarding without shell interpolation and with preserved working directory/exit status.
+- Preserve CommonJS scope for extensionless upstream adapters.
+- Fix unsafe JavaScript line removal and honor source-map policy switches.
+- Add provenance/patch inventories, Rust CI, engine behavior/native smoke checks, and a generated README banner.
+- Retain the conservative JS-only workflow and existing browser tests.
+
 ## 0.2.0
 
 Compatibility-focused release; no anti-cloning effectiveness claim.

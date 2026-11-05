@@ -1,0 +1,42 @@
+{
+  "modified": {
+    "BACKLOG.md": {
+      "sha256": "87f40a4334c68b986eb91945feee32b9ed219036ece479725dd3a3e8bd9a69c8",
+      "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
+    },
+    "KNOWLEDGE.md": {
+      "sha256": "f5dcdba710255ef80cb982f7c53ede5a8cbff465beb3a14f6dd9b0d5342a8862",
+      "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
+    },
+    "README.md": {
+      "sha256": "06e98bfb471affd40711654f34cc4ff2623a6daae69133c7a674f4a752b91295",
+      "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
+    },
+    "STATE.md": {
+      "sha256": "2268fd6b0be9d370a0a87c64aa662627d2272a0b61baa5ab8ccb3266117485ff",
+      "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
+    },
+    "crates/direa-cli/src/build.rs": {
+      "sha256": "124539ed2aeadb39681c93213a57f4ec4f3b2a9dc2ae7257bf6e568d19112ee6",
+      "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
+    },
+    "crates/direa-core/src/native_post.rs": {
+      "sha256": "5400197f2f6121e541d53990e11d2b4b0b33490f05a3f6c3eb5ac649b1a01f5b",
+      "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
+    },
+    "docs/adr/README.md": {
+      "sha256": "8337ec4040971b64a71db5a0a49e950819b21f187bee838746ad11172fa4abfb",
+      "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
+    }
+  },
+  "added": {
+    "package.json": {
+      "sha256": "a51bff776fdd53226e2e67d8f654d17dadfe3decc8bf8bf869cba3aff9813826",
+      "reason": "Explicit CommonJS boundary"
+    },
+    "docs/adr/ADR-0022-conservative-javascript-cleanup.md": {
+      "sha256": "a30e77abfb99f59734e9c89f9741e2f1fa061a045410be1825bbe24c036250ec",
+      "reason": "Record conservative cleanup decision"
+    }
+  }
+}

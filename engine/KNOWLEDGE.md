@@ -570,3 +570,9 @@ and APK arms; tests `jar_embeds_notice_and_canary_entry`,
 `apk_embeds_notice_and_canary_entry`)] -> Container formats accept additive,
 non-semantic entries; keep them in a reserved namespace and out of the measured
 members. (B-046)
+
+**K-063 — Line-oriented JavaScript cleanup must preserve ambiguous input.**
+Deleting a line because it contains a source-map marker corrupts strings/code; comments inside templates are data. The built-in pass now declines ambiguous syntax and honors policy flags. Broader stripping needs a parser (ADR-0022, B-062).
+
+**K-064 — Embedded repositories inherit Node package scope.**
+Upstream extensionless Node adapters use CommonJS and fail when a parent package declares module scope. An explicit `engine/package.json` boundary fixes that without renaming adapters. Current Clippy also requests a byte string in place of a byte-character array; the rewrite preserves behavior (B-063).

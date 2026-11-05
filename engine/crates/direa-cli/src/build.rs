@@ -924,24 +924,37 @@ fn harden_text_file(
 
 /// Returns (transformed body, comments stripped, source maps stripped).
 fn transform_js(text: &str, policy: &ResolvedPolicy) -> (String, usize, usize) {
+    // A line scanner cannot distinguish template contents, continued strings,
+    // or block comments from code. Preserve ambiguous input byte-for-byte;
+    // parser-based cleanup belongs in the optional JS adapter (ADR-0022).
+    if text.contains('`') || text.contains('\\') || text.contains("/*") {
+        return (text.to_string(), 0, 0);
+    }
     let mut comments = 0;
     let mut maps = 0;
     let mut out = String::with_capacity(text.len());
-    for line in text.lines() {
+    for line in text.split_inclusive('\n') {
         let trimmed = line.trim_start();
         if trimmed.starts_with("//# sourceMappingURL=")
             || trimmed.starts_with("//@ sourceMappingURL=")
-            || trimmed.contains("sourceMappingURL=")
         {
-            maps += 1;
+            if policy.remove_source_maps {
+                maps += 1;
+            } else {
+                out.push_str(line);
+            }
             continue;
         }
-        if policy.strip_build_metadata && trimmed.starts_with("//") && !line.contains('`') {
+        let lower = trimmed.to_ascii_lowercase();
+        let notice = trimmed.starts_with("//!")
+            || lower.contains("copyright")
+            || lower.contains("@license")
+            || lower.contains("@preserve");
+        if policy.strip_build_metadata && trimmed.starts_with("//") && !notice {
             comments += 1;
             continue;
         }
         out.push_str(line);
-        out.push('\n');
     }
     (out, comments, maps)
 }
@@ -1251,6 +1264,47 @@ mod tests {
         assert!(!out.contains("sourceMappingURL"));
         assert_eq!(maps, 1);
         assert!(out.contains("var y=2;"));
+    }
+
+    #[test]
+    fn source_map_text_inside_code_is_preserved() {
+        let text = "const text = 'sourceMappingURL=keep';\nconsole.log(text);";
+        let (out, comments, maps) = transform_js(text, &ResolvedPolicy::default());
+        assert_eq!(out, text);
+        assert_eq!((comments, maps), (0, 0));
+    }
+
+    #[test]
+    fn ambiguous_javascript_is_preserved_byte_for_byte() {
+        for text in [
+            "const text = `first\n// keep this data\n//# sourceMappingURL=data\nlast`;",
+            "/* heading\n// comment contents\n*/\nconst value = 1;",
+            "const text = 'continued\\\n// not a comment';",
+        ] {
+            let (out, comments, maps) = transform_js(text, &ResolvedPolicy::default());
+            assert_eq!(out, text);
+            assert_eq!((comments, maps), (0, 0));
+        }
+    }
+
+    #[test]
+    fn disabled_source_map_removal_is_respected() {
+        let text = "var x=1;\r\n//# sourceMappingURL=app.map\r\n";
+        let policy = ResolvedPolicy {
+            remove_source_maps: false,
+            ..ResolvedPolicy::default()
+        };
+        let (out, _, maps) = transform_js(text, &policy);
+        assert_eq!(out, text);
+        assert_eq!(maps, 0);
+    }
+
+    #[test]
+    fn license_comments_and_line_endings_are_preserved() {
+        let text = "// Copyright Example\r\n//! Important notice\r\n// @license MIT\r\nconst x=1;";
+        let (out, comments, _) = transform_js(text, &ResolvedPolicy::default());
+        assert_eq!(out, text);
+        assert_eq!(comments, 0);
     }
 
     #[test]

@@ -351,7 +351,7 @@ fn strip_go_build_info(data: &mut [u8], report: &mut StripReport) {
         report.note("go build info magic", GO_BUILDINFO_MAGIC.len() as u64);
     }
     // Build ID strings, both quote styles.
-    for quote in [b'"', b'\''] {
+    for quote in *b"\"'" {
         let mut needle = b"Go build ID: ".to_vec();
         needle.push(quote);
         let mut from = 0usize;
