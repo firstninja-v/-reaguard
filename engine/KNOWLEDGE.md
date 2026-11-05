@@ -576,3 +576,6 @@ Deleting a line because it contains a source-map marker corrupts strings/code; c
 
 **K-064 â€” Embedded repositories inherit Node package scope.**
 Upstream extensionless Node adapters use CommonJS and fail when a parent package declares module scope. An explicit `engine/package.json` boundary fixes that without renaming adapters. Current Clippy also requests a byte string in place of a byte-character array; the rewrite preserves behavior (B-063).
+
+**K-065 — Missing output paths still need canonical ancestors.**
+Canonicalizing only existing whole paths compares a canonical source to a lexical destination. macOS temporary-directory aliases and Windows verbatim prefixes can bypass containment checks. Resolve the nearest existing ancestor, then normalize the missing suffix before comparing. Cross-platform CI exposed this in the existing guard regression (B-064).

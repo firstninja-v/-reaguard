@@ -6,6 +6,7 @@
 - Add `engine` command forwarding without shell interpolation and with preserved working directory/exit status.
 - Preserve CommonJS scope for extensionless upstream adapters.
 - Fix unsafe JavaScript line removal and honor source-map policy switches.
+- Fix source/output containment across filesystem aliases, including macOS temporary paths and Windows path prefixes.
 - Add provenance/patch inventories, Rust CI, engine behavior/native smoke checks, and a generated README banner.
 - Retain the conservative JS-only workflow and existing browser tests.
 

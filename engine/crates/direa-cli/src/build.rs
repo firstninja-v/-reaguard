@@ -668,11 +668,30 @@ fn relative_dest(src: &Path) -> PathBuf {
     }
 }
 
-/// Best-effort absolute path (resolves symlinks when the path exists).
+/// Resolve existing ancestors even when the final output does not exist yet.
 fn absolute(path: &Path) -> PathBuf {
-    std::fs::canonicalize(path)
-        .or_else(|_| std::path::absolute(path))
-        .unwrap_or_else(|_| path.to_path_buf())
+    let full = std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf());
+    let mut ancestor = full.clone();
+    let mut suffix = Vec::new();
+    loop {
+        if let Ok(mut resolved) = std::fs::canonicalize(&ancestor) {
+            for component in suffix.iter().rev() {
+                if component == ".." {
+                    resolved.pop();
+                } else if component != "." {
+                    resolved.push(component);
+                }
+            }
+            return resolved;
+        }
+        let Some(component) = ancestor.components().next_back() else {
+            return full;
+        };
+        suffix.push(component.as_os_str().to_owned());
+        if !ancestor.pop() {
+            return full;
+        }
+    }
 }
 
 /// Post-build health check (ADR-0013): always verifies the hardened artifact is
@@ -1363,23 +1382,17 @@ mod tests {
         let _ = std::fs::create_dir_all(&dir);
         let target = dir.join("app.js");
         std::fs::write(&target, "var x = 1;\n").unwrap();
-        let stub = dir.join("stub-adapter.sh");
-        let script = r#"#!/bin/sh
-input=$(cat)
-target=$(printf '%s' "$input" | sed -n 's/.*"target":"\([^"]*\)".*/\1/p')
-printf '\n/*stub-applied*/\n' >> "$target"
-printf '{"adapter":"js","status":"ok","steps":[{"adapter":"js","action":"obfuscated","detail":"stub"}],"findings":[],"metrics":{},"message":"stub"}'
+        let stub = dir.join("stub-adapter.cjs");
+        let script = r#"const fs = require('fs');
+const input = JSON.parse(fs.readFileSync(0, 'utf8'));
+fs.appendFileSync(input.target, '\n/*stub-applied*/\n');
+process.stdout.write(JSON.stringify({adapter:'js',status:'ok',steps:[{adapter:'js',action:'obfuscated',detail:'stub'}],findings:[],metrics:{},message:'stub'}));
 "#;
         std::fs::write(&stub, script).unwrap();
-        #[cfg(unix)]
-        {
-            use std::os::unix::fs::PermissionsExt;
-            std::fs::set_permissions(&stub, std::fs::Permissions::from_mode(0o755)).unwrap();
-        }
         let entry = AdapterEntry {
             id: "js".into(),
-            command: stub.to_string_lossy().into_owned(),
-            args: vec![],
+            command: "node".into(),
+            args: vec![stub.to_string_lossy().into_owned()],
             kinds: vec![TargetKind::JavaScript],
             builtin: false,
         };
@@ -1496,6 +1509,20 @@ printf '{"adapter":"js","status":"ok","steps":[{"adapter":"js","action":"obfusca
         // dest elsewhere is fine
         let elsewhere = dir.join("out").join("app.js");
         assert!(guard_source_and_output(&src, &elsewhere).is_ok());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn refuses_output_under_a_symlinked_source_ancestor() {
+        let dir = std::env::temp_dir().join(format!("direa-alias-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let source = dir.join("source");
+        std::fs::create_dir_all(&source).unwrap();
+        let alias = dir.join("alias");
+        std::os::unix::fs::symlink(&source, &alias).unwrap();
+        assert!(guard_source_and_output(&source, &alias.join("new/app.js")).is_err());
+        assert!(guard_source_and_output(&source, &alias.join("new/../app.js")).is_err());
         let _ = std::fs::remove_dir_all(&dir);
     }
 

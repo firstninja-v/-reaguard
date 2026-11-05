@@ -128,10 +128,10 @@ counted here (one fact, one home).
 | Metric | Value |
 |---|---|
 | Rust crates | 4 |
-| Tests (`cargo test --all`) | 156 |
-| Backlog items (`B-NNN`) | 63 |
+| Tests (`cargo test --all`) | 157 |
+| Backlog items (`B-NNN`) | 64 |
 | Open backlog items (High) | 0 |
-| Durable lessons (`K-NNN`) | 64 |
+| Durable lessons (`K-NNN`) | 65 |
 | Decision records (`ADR-NNNN`) | 22 |
 | Markdown docs (tracked) | 45 |
 
@@ -339,3 +339,5 @@ counted here (one fact, one home).
 ## REAguard integration
 
 The upstream baseline passed its Rust suite in CI after adding an explicit CommonJS package boundary. B-062 fixes unsafe line-based JavaScript cleanup; B-063 updates a byte literal for current Clippy. The root project supplies engine invocation and parser-based JS packaging; upstream manifest/protocol names remain compatible. Validation for these changes is tracked by the root Engine workflow.
+
+- B-064: cross-platform CI exposed missing-output ancestor canonicalization; resolve existing ancestors before checking source/output overlap. Adapter protocol test now uses an explicit Node command instead of a POSIX shebang, and non-Linux guard arguments are marked intentionally unused.

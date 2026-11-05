@@ -1,11 +1,11 @@
 {
   "modified": {
     "BACKLOG.md": {
-      "sha256": "87f40a4334c68b986eb91945feee32b9ed219036ece479725dd3a3e8bd9a69c8",
+      "sha256": "2771752c558dc862796a67c49d223b9d54f10822040b469ee9d6eba92ca1129a",
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "KNOWLEDGE.md": {
-      "sha256": "f5dcdba710255ef80cb982f7c53ede5a8cbff465beb3a14f6dd9b0d5342a8862",
+      "sha256": "20d332f90eec62b1af232d01fa01af805a60248264f9d0259f1e8c04aeae5f39",
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "README.md": {
@@ -13,11 +13,11 @@
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "STATE.md": {
-      "sha256": "2268fd6b0be9d370a0a87c64aa662627d2272a0b61baa5ab8ccb3266117485ff",
+      "sha256": "68a7a0feffe12637c986f1e154f7ee22740fbc4a53585c51e5986a517751a4eb",
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "crates/direa-cli/src/build.rs": {
-      "sha256": "124539ed2aeadb39681c93213a57f4ec4f3b2a9dc2ae7257bf6e568d19112ee6",
+      "sha256": "5e61a836f98aef55909ebb900614a8f8688aa965d41df33000d8d73a348327dc",
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
     },
     "crates/direa-core/src/native_post.rs": {
@@ -27,6 +27,10 @@
     "docs/adr/README.md": {
       "sha256": "8337ec4040971b64a71db5a0a49e950819b21f187bee838746ad11172fa4abfb",
       "reason": "REAguard conservative JS cleanup, current-Clippy compatibility, and associated engineering documentation"
+    },
+    "crates/direa-core/src/guard.rs": {
+      "reason": "Cross-platform correctness and associated documentation",
+      "sha256": "ada778f16154abaaaa576a885545841fefa50b6a9d7d7bf979737b75cbac68fe"
     }
   },
   "added": {

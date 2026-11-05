@@ -108,6 +108,8 @@ pub fn detect_with(signatures: &[String]) -> GuardReport {
 
 /// Platform-specific debugger/tracer detection.
 fn platform_findings(findings: &mut Vec<String>, signatures: &[&str]) {
+    #[cfg(not(target_os = "linux"))]
+    let _ = signatures;
     #[cfg(target_os = "linux")]
     {
         if let Ok(status) = std::fs::read_to_string("/proc/self/status") {

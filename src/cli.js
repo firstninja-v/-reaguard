@@ -3,10 +3,11 @@ import { parseArgs } from 'node:util';
 import { build, plan, verify, VERSION } from './core.js';
 import { runEngine } from './engine.js';
 
-try {
+async function main() {
   if (process.argv[2] === 'engine') {
     process.exitCode = await runEngine(process.argv.slice(3));
-  } else {
+    return;
+  }
   const { values, positionals } = parseArgs({ allowPositionals: true, options: {
     out: { type: 'string' }, seed: { type: 'string' }, decoys: { type: 'string' },
     'max-growth': { type: 'string' }, module: { type: 'boolean' }, mangle: { type: 'boolean' },
@@ -40,8 +41,9 @@ try {
     }
     console.log(JSON.stringify(result, null, 2));
   }
-  }
-} catch (error) {
+}
+
+main().catch(error => {
   console.error(JSON.stringify({ error: error.message }));
   process.exitCode = 1;
-}
+});
