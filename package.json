@@ -1,0 +1,13 @@
+{
+  "name": "reaguard",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/firstninja-v/-reaguard.git" },
+  "private": true,
+  "type": "module",
+  "description": "Reproducible JavaScript release packaging with bounded synthetic data and integrity verification",
+  "bin": { "reaguard": "src/cli.js" },
+  "scripts": { "test": "node --test", "demo": "node src/cli.js build examples/calculator.cjs --out release-demo --seed demo --decoys 64" },
+  "engines": { "node": ">=22" },
+  "dependencies": { "terser": "5.51.2" }
+}
