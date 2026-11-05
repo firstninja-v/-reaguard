@@ -1,0 +1,14 @@
+{
+  "js-secrets": 40,
+  "js-tree": 30,
+  "wasm-module": 55,
+  "java-class": 55,
+  "native-elf": 40,
+  "native-pe": 55,
+  "native-macho": 55,
+  "electron-asar": 30,
+  "android-apk": 15,
+  "java-jar": 15,
+  "go": 35,
+  "dotnet": 18
+}

@@ -7,6 +7,11 @@
 
 Minify a bundle. Preview the changes. Test the result. Verify what you ship.
 
+The complete MIT-licensed upstream Rust toolkit is now included under
+[`engine/`](engine/README.md), pinned and attributed in [UPSTREAM.json](UPSTREAM.json)
+and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Integration work is in progress;
+the JavaScript workflow below remains available.
+
 **0.2.0 — experimental, JavaScript only.** REAguard reduces readable formatting and can optionally rename local identifiers or add synthetic comments. It has **not** demonstrated resistance to AI cloning. It is not a replacement for a multi-platform obfuscator, access control, or keeping secrets on a server.
 
 ## Quick start

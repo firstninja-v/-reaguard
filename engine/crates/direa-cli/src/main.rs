@@ -1,0 +1,865 @@
+use std::path::{Path, PathBuf};
+
+use anyhow::{bail, Context, Result};
+use clap::{Parser, Subcommand, ValueEnum};
+
+use direa_core::manifest::MANIFEST_FILE;
+use direa_core::{plan_manifest, Manifest, Profile};
+
+mod build;
+mod ui;
+
+use ui::Ui;
+
+#[derive(Parser, Debug)]
+#[command(
+    name = "die-a-rea",
+    about = "Harden software against automated / LLM reverse engineering and measure the result.",
+    version,
+    propagate_version = true
+)]
+struct Cli {
+    /// Path to the manifest file.
+    #[arg(long, global = true, default_value = MANIFEST_FILE)]
+    manifest: PathBuf,
+
+    /// Increase verbosity (repeatable): -v phases/timing, -vv transform trace.
+    #[arg(long, short, global = true, action = clap::ArgAction::Count)]
+    verbose: u8,
+
+    /// Suppress non-error output.
+    #[arg(long, short, global = true)]
+    quiet: bool,
+
+    /// Format for error output.
+    #[arg(long, global = true, value_enum, default_value_t = ErrorFormat::Human)]
+    error_format: ErrorFormat,
+
+    #[command(subcommand)]
+    command: Command,
+}
+
+#[derive(ValueEnum, Clone, Copy, Debug)]
+enum ErrorFormat {
+    Human,
+    Json,
+}
+
+#[derive(ValueEnum, Clone, Copy, Debug)]
+enum ReportFormat {
+    Human,
+    Json,
+    Sarif,
+    Junit,
+}
+
+#[derive(Subcommand, Debug)]
+enum Command {
+    /// Create a starter die-a-rea.toml in the current directory.
+    Init {
+        /// Project name written into the manifest.
+        #[arg(long)]
+        name: Option<String>,
+        /// One or more target paths to pre-fill.
+        targets: Vec<String>,
+        /// Overwrite an existing manifest.
+        #[arg(long)]
+        force: bool,
+    },
+
+    /// List the built-in protection profiles.
+    Profiles,
+
+    /// Print a project-memory entry (K-NNN, ADR-NNNN or B-NNN).
+    Explain {
+        /// The id to look up.
+        id: String,
+        /// Repository root containing KNOWLEDGE.md / BACKLOG.md / docs/adr.
+        #[arg(long, default_value = ".")]
+        root: PathBuf,
+        /// Emit machine-readable JSON.
+        #[arg(long)]
+        json: bool,
+    },
+
+    /// Build and score every fixture in a benchmark corpus.
+    Bench {
+        /// Corpus directory (each subdirectory holds a `die-a-rea.toml`).
+        #[arg(long, default_value = "bench")]
+        dir: PathBuf,
+        /// Fail if any case scores below its `expected.json` minimum.
+        #[arg(long)]
+        check: bool,
+        /// Emit machine-readable JSON.
+        #[arg(long)]
+        json: bool,
+    },
+
+    /// Report toolchain, adapter and target readiness.
+    Doctor {
+        /// Emit machine-readable JSON.
+        #[arg(long)]
+        json: bool,
+    },
+
+    /// Run the agent-defense detector gauntlet (CI-friendly; exits non-zero on failure).
+    CanarySelftest {
+        /// Optional external detector command (stdin = text, exit 0 = injection).
+        #[arg(long)]
+        detector: Option<String>,
+        /// Emit machine-readable JSON.
+        #[arg(long)]
+        json: bool,
+    },
+
+    /// Show the hardening plan for the manifest (no side effects).
+    Plan {
+        /// Emit machine-readable JSON.
+        #[arg(long)]
+        json: bool,
+    },
+
+    /// Produce hardened artifacts.
+    Build {
+        /// Output directory for hardened artifacts.
+        #[arg(long, default_value = "dist-hardened")]
+        out: PathBuf,
+        /// Show what would be done without writing anything.
+        #[arg(long)]
+        dry_run: bool,
+        /// Override the randomization seed (reproducible decoy layout).
+        #[arg(long)]
+        seed: Option<u64>,
+        /// Overwrite an existing output directory die-a-rea did not create.
+        #[arg(long)]
+        force: bool,
+        /// Emit machine-readable JSON.
+        #[arg(long)]
+        json: bool,
+    },
+
+    /// Measure the reverse-engineering Resistance Score (RRS).
+    Verify {
+        /// The unhardened reference artifact.
+        #[arg(long)]
+        original: PathBuf,
+        /// The hardened artifact (defaults to the build output).
+        #[arg(long)]
+        hardened: Option<PathBuf>,
+        /// Also run REA as an external adversary when available.
+        #[arg(long)]
+        with_rea: bool,
+        /// REA command prefix (without the target path).
+        #[arg(long, num_args = 1.., default_values_t = default_rea_command())]
+        rea_command: Vec<String>,
+        /// Build-metadata sidecar produced by `build` (defaults beside the
+        /// hardened artifact).
+        #[arg(long)]
+        build_meta: Option<PathBuf>,
+        /// Also measure the runtime-instrumentation axis against this environment.
+        #[arg(long)]
+        with_runtime: bool,
+        /// External decompiler command for the control-flow axis ({artifact} substituted).
+        #[arg(long)]
+        decompiler: Option<String>,
+        /// Report format for stdout (and --out).
+        #[arg(long, value_enum, default_value_t = ReportFormat::Human)]
+        format: ReportFormat,
+        /// Write the JSON report to this path.
+        #[arg(long)]
+        out: Option<PathBuf>,
+        /// Emit machine-readable JSON to stdout.
+        #[arg(long)]
+        json: bool,
+    },
+}
+
+fn default_rea_command() -> Vec<String> {
+    vec![
+        "npx".into(),
+        "-y".into(),
+        "rea-agents@latest".into(),
+        "analyze-javascript-application".into(),
+    ]
+}
+
+fn load_manifest(path: &PathBuf) -> Result<Manifest> {
+    if !path.exists() {
+        return Err(direa_core::DireaError::Refused {
+            code: "manifest_missing",
+            message: format!(
+                "manifest not found at {} - run `die-a-rea init` first",
+                path.display()
+            ),
+        }
+        .into());
+    }
+    Manifest::load(path).with_context(|| format!("loading {}", path.display()))
+}
+
+fn main() {
+    let cli = Cli::parse();
+    let error_format = cli.error_format;
+    if let Err(err) = run(cli) {
+        report_error(&err, error_format);
+        std::process::exit(1);
+    }
+}
+
+/// Print an error with a stable code, in human or JSON form.
+fn report_error(err: &anyhow::Error, format: ErrorFormat) {
+    let code = err
+        .chain()
+        .find_map(|cause| cause.downcast_ref::<direa_core::DireaError>())
+        .map(|e| e.code())
+        .unwrap_or("error");
+    match format {
+        ErrorFormat::Human => {
+            eprintln!("error[{code}]: {err}");
+            for cause in err.chain().skip(1) {
+                eprintln!("  caused by: {cause}");
+            }
+        }
+        ErrorFormat::Json => {
+            let causes: Vec<String> = err.chain().skip(1).map(|c| c.to_string()).collect();
+            let envelope = serde_json::json!({
+                "error": { "code": code, "message": err.to_string(), "causes": causes }
+            });
+            eprintln!("{}", envelope);
+        }
+    }
+}
+
+fn run(cli: Cli) -> Result<()> {
+    let ui = Ui::new(cli.verbose, cli.quiet);
+    match cli.command {
+        Command::Init {
+            name,
+            targets,
+            force,
+        } => cmd_init(&ui, &cli.manifest, name, targets, force),
+        Command::Profiles => cmd_profiles(&ui),
+        Command::Bench { dir, check, json } => cmd_bench(&ui, &dir, check, json),
+        Command::Doctor { json } => cmd_doctor(&ui, &cli.manifest, json),
+        Command::Explain { id, root, json } => cmd_explain(&ui, &root, &id, json),
+        Command::CanarySelftest { detector, json } => cmd_canary_selftest(&ui, detector, json),
+        Command::Plan { json } => cmd_plan(&ui, &cli.manifest, json),
+        Command::Build {
+            out,
+            dry_run,
+            seed,
+            force,
+            json,
+        } => cmd_build(&ui, &cli.manifest, out, dry_run, seed, force, json),
+        Command::Verify {
+            original,
+            hardened,
+            with_rea,
+            rea_command,
+            build_meta,
+            with_runtime,
+            decompiler,
+            format,
+            out,
+            json,
+        } => cmd_verify(
+            &ui,
+            cli.manifest.clone(),
+            original,
+            hardened,
+            with_rea,
+            rea_command,
+            build_meta,
+            with_runtime,
+            decompiler,
+            format,
+            out,
+            json,
+        ),
+    }
+}
+
+fn cmd_init(
+    ui: &Ui,
+    path: &PathBuf,
+    name: Option<String>,
+    mut targets: Vec<String>,
+    force: bool,
+) -> Result<()> {
+    if path.exists() && !force {
+        bail!(
+            "{} already exists (use --force to overwrite)",
+            path.display()
+        );
+    }
+    let name = name.unwrap_or_else(|| {
+        std::env::current_dir()
+            .ok()
+            .and_then(|d| d.file_name().map(|n| n.to_string_lossy().to_string()))
+            .unwrap_or_else(|| "app".to_string())
+    });
+    if targets.is_empty() {
+        let root = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+        let found = direa_core::discover::discover(&root);
+        if found.is_empty() {
+            ui.info(
+                1,
+                "no shipped artifacts discovered; edit die-a-rea.toml to add targets",
+            );
+        }
+        for d in &found {
+            ui.info(1, format!("discovered {} ({})", d.path.display(), d.reason));
+        }
+        targets = found.iter().map(|d| d.path.display().to_string()).collect();
+    }
+    let content = Manifest::starter(&name, &targets);
+    std::fs::write(path, content).with_context(|| format!("writing {}", path.display()))?;
+    ui.info(2, format!("starter manifest for project '{name}'"));
+    ui.out(format!("wrote {}", path.display()));
+    Ok(())
+}
+
+fn cmd_profiles(ui: &Ui) -> Result<()> {
+    ui.out(format!(
+        "{:<10} {:<10} {:<10} {:<12} {:<10} {:<10}",
+        "profile", "symbols", "strings", "controlflow", "runtime", "agent"
+    ));
+    for profile in [
+        Profile::Low,
+        Profile::Medium,
+        Profile::High,
+        Profile::Paranoid,
+    ] {
+        let p = profile.resolve();
+        ui.out(format!(
+            "{:<10} {:<10} {:<10} {:<12} {:<10} {:<10}",
+            profile.as_str(),
+            p.strip_symbols,
+            p.encrypt_strings,
+            p.obfuscate_control_flow,
+            p.anti_instrumentation,
+            if p.agent_decoys {
+                "decoys"
+            } else if p.agent_canaries {
+                "canary"
+            } else {
+                "notice"
+            },
+        ));
+    }
+    Ok(())
+}
+
+fn cmd_bench(ui: &Ui, dir: &Path, check: bool, json: bool) -> Result<()> {
+    use std::collections::BTreeMap;
+
+    let expected: BTreeMap<String, u64> = if check {
+        let path = dir.join("expected.json");
+        let text = std::fs::read_to_string(&path)
+            .with_context(|| format!("reading {}", path.display()))?;
+        serde_json::from_str(&text).with_context(|| format!("parsing {}", path.display()))?
+    } else {
+        BTreeMap::new()
+    };
+
+    let entries = std::fs::read_dir(dir).with_context(|| format!("reading {}", dir.display()))?;
+    let mut rows: Vec<(String, u64, String)> = Vec::new();
+
+    for entry in entries.flatten() {
+        let case_dir = std::fs::canonicalize(entry.path()).unwrap_or_else(|_| entry.path());
+        if !case_dir.is_dir() || !case_dir.join("die-a-rea.toml").is_file() {
+            continue;
+        }
+        let name = entry.file_name().to_string_lossy().to_string();
+        let mut manifest = Manifest::load(case_dir.join("die-a-rea.toml"))?;
+        for target in &mut manifest.targets {
+            target.path = case_dir.join(&target.path);
+        }
+        let src = manifest
+            .targets
+            .first()
+            .map(|t| t.path.clone())
+            .ok_or_else(|| anyhow::anyhow!("bench case '{name}' has no targets"))?;
+        if !src.exists() {
+            ui.info(
+                1,
+                format!(
+                    "bench:{name}: skipped (missing target {}; run bench/generate.sh)",
+                    src.display()
+                ),
+            );
+            continue;
+        }
+        let out = std::env::temp_dir().join(format!("direa-bench-{name}-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&out);
+
+        ui.timed(1, &format!("bench:{name}"), || {
+            build::build(&manifest, &out, false, None, false)
+        })?;
+
+        let dest = out.join(src.file_name().unwrap_or_default());
+        let opts = direa_verify::VerifyOptions::new(&src, &dest);
+        let run = direa_verify::run(&opts).map_err(|e| anyhow::anyhow!(e))?;
+        rows.push((
+            name,
+            u64::from(run.report.rrs),
+            run.report.grade.as_str().to_string(),
+        ));
+        let _ = std::fs::remove_dir_all(&out);
+    }
+
+    if json {
+        let array: Vec<serde_json::Value> = rows
+            .iter()
+            .map(|(name, rrs, grade)| {
+                serde_json::json!({ "name": name, "rrs": rrs, "grade": grade })
+            })
+            .collect();
+        ui.out(serde_json::to_string_pretty(&array)?);
+    } else {
+        ui.out(format!("{:<20} {:>4} {}", "case", "RRS", "grade"));
+        for (name, rrs, grade) in &rows {
+            ui.out(format!("{name:<20} {rrs:>4} {grade}"));
+        }
+    }
+
+    if check {
+        for (name, rrs, _) in &rows {
+            if let Some(min) = expected.get(name) {
+                if rrs < min {
+                    return Err(direa_core::DireaError::Refused {
+                        code: "bench_regression",
+                        message: format!(
+                            "bench case '{name}': RRS {rrs} is below the required {min}"
+                        ),
+                    }
+                    .into());
+                }
+            }
+        }
+        ui.info(1, "bench: all cases meet their minimum RRS");
+    }
+    Ok(())
+}
+
+#[derive(serde::Serialize)]
+struct ExplainEntry {
+    id: String,
+    kind: String,
+    text: String,
+}
+
+fn explain_not_found(id: &str) -> anyhow::Error {
+    direa_core::DireaError::Refused {
+        code: "id_not_found",
+        message: format!("no project-memory entry for '{id}'"),
+    }
+    .into()
+}
+
+fn read_memory(root: &Path, name: &str) -> Result<String> {
+    let path = root.join(name);
+    std::fs::read_to_string(&path).map_err(|_| {
+        direa_core::DireaError::Refused {
+            code: "memory_not_found",
+            message: format!(
+                "{} not found; run from the die-a-rea repository or pass --root",
+                path.display()
+            ),
+        }
+        .into()
+    })
+}
+
+fn knowledge_block(text: &str, id: &str) -> Option<String> {
+    let marker = format!("**{id}");
+    let mut block = Vec::new();
+    let mut collecting = false;
+    for line in text.lines() {
+        if line.starts_with(&marker) {
+            collecting = true;
+        } else if collecting && line.starts_with("**") {
+            break;
+        }
+        if collecting {
+            block.push(line);
+        }
+    }
+    let joined = block.join("\n").trim().to_string();
+    if joined.is_empty() {
+        None
+    } else {
+        Some(joined)
+    }
+}
+
+fn backlog_row(text: &str, id: &str) -> Option<String> {
+    let needle = format!("| {id} |");
+    text.lines()
+        .find(|l| l.starts_with(&needle))
+        .map(|l| l.trim().to_string())
+}
+
+fn cmd_explain(ui: &Ui, root: &Path, id: &str, json: bool) -> Result<()> {
+    let id = id.to_ascii_uppercase();
+    let (kind, text) = if id.starts_with("K-") {
+        let md = read_memory(root, "KNOWLEDGE.md")?;
+        (
+            "knowledge",
+            knowledge_block(&md, &id).ok_or_else(|| explain_not_found(&id))?,
+        )
+    } else if id.starts_with("ADR-") {
+        let dir = root.join("docs/adr");
+        let prefix = format!("{id}-");
+        let found = std::fs::read_dir(&dir).ok().and_then(|rd| {
+            rd.flatten().find(|e| {
+                e.file_name()
+                    .to_string_lossy()
+                    .to_ascii_uppercase()
+                    .starts_with(&prefix)
+            })
+        });
+        let path = found
+            .map(|e| e.path())
+            .ok_or_else(|| explain_not_found(&id))?;
+        let content = std::fs::read_to_string(&path)
+            .with_context(|| format!("reading {}", path.display()))?;
+        ("adr", content.trim().to_string())
+    } else if id.starts_with("B-") {
+        let md = read_memory(root, "BACKLOG.md")?;
+        (
+            "backlog",
+            backlog_row(&md, &id).ok_or_else(|| explain_not_found(&id))?,
+        )
+    } else {
+        return Err(direa_core::DireaError::Refused {
+            code: "unknown_id",
+            message: format!("'{id}' is not a K-NNN, ADR-NNNN or B-NNN id"),
+        }
+        .into());
+    };
+
+    if json {
+        ui.out(serde_json::to_string_pretty(&ExplainEntry {
+            id,
+            kind: kind.to_string(),
+            text,
+        })?);
+    } else {
+        ui.out(format!("{kind} {id}\n{text}"));
+    }
+    Ok(())
+}
+
+#[derive(serde::Serialize)]
+struct DoctorCheck {
+    name: String,
+    detail: String,
+    ok: bool,
+}
+
+#[derive(serde::Serialize)]
+struct DoctorReport {
+    platform: String,
+    checks: Vec<DoctorCheck>,
+}
+
+/// Optional external tools `doctor` reports on (readiness, never requirements).
+/// Includes the WASM toolchain (Binaryen/WABT) and common decompilers that can
+/// back `verify --decompiler` / the control-flow axis (ADR-0017, B-051).
+const OPTIONAL_TOOLS: &[&str] = &[
+    "sh",
+    "node",
+    "npm",
+    "javascript-obfuscator",
+    "go",
+    "garble",
+    "clang",
+    "dotnet",
+    "r8",
+    "proguard",
+    "nm",
+    "objdump",
+    "llvm-nm",
+    "wasm-opt",
+    "wasm-mutate",
+    "wasm2wat",
+    "wat2wasm",
+    "ghidra",
+    "analyzeHeadless",
+    "radare2",
+    "rizin",
+];
+
+fn cmd_doctor(ui: &Ui, manifest_path: &Path, json: bool) -> Result<()> {
+    let mut checks = vec![DoctorCheck {
+        name: "manifest".into(),
+        detail: manifest_path.display().to_string(),
+        ok: manifest_path.exists(),
+    }];
+
+    for entry in direa_core::planner::default_registry()
+        .iter()
+        .filter(|e| !e.builtin)
+    {
+        let key = direa_core::adapter::env_key(&entry.id);
+        let via_env = std::env::var(&key).ok().filter(|v| !v.trim().is_empty());
+        let via_path = direa_core::which(&entry.command);
+        let ok = via_env.is_some() || via_path.is_some();
+        let detail = if let Some(v) = via_env {
+            format!("{key}={v}")
+        } else if let Some(p) = via_path {
+            p.display().to_string()
+        } else {
+            format!("set {key} or add `{}` to PATH", entry.command)
+        };
+        checks.push(DoctorCheck {
+            name: format!("adapter:{}", entry.id),
+            detail,
+            ok,
+        });
+    }
+
+    for tool in OPTIONAL_TOOLS {
+        let ok = direa_core::which(tool).is_some();
+        checks.push(DoctorCheck {
+            name: format!("tool:{tool}"),
+            detail: if ok {
+                "found".into()
+            } else {
+                "absent (optional)".into()
+            },
+            ok,
+        });
+    }
+
+    let report = DoctorReport {
+        platform: format!("{}-{}", std::env::consts::OS, std::env::consts::ARCH),
+        checks,
+    };
+    if json {
+        ui.out(serde_json::to_string_pretty(&report)?);
+    } else {
+        ui.out(format!("platform: {}", report.platform));
+        for c in &report.checks {
+            ui.out(format!(
+                "  {} {:<24} {}",
+                if c.ok { "ok" } else { "--" },
+                c.name,
+                c.detail
+            ));
+        }
+        let ready = report.checks.iter().filter(|c| c.ok).count();
+        ui.out(format!("{ready}/{} checks ok", report.checks.len()));
+    }
+    Ok(())
+}
+
+/// Run an external detector command over `text`; exit 0 means "injection".
+fn run_detector(command: &str, text: &str) -> bool {
+    use std::io::Write;
+    use std::process::{Command, Stdio};
+    let mut child = match Command::new("sh")
+        .arg("-c")
+        .arg(command)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .spawn()
+    {
+        Ok(c) => c,
+        Err(_) => return false,
+    };
+    if let Some(mut stdin) = child.stdin.take() {
+        let _ = stdin.write_all(text.as_bytes());
+    }
+    child.wait().map(|s| s.success()).unwrap_or(false)
+}
+
+fn cmd_canary_selftest(ui: &Ui, detector: Option<String>, json: bool) -> Result<()> {
+    let report = match &detector {
+        Some(cmd) => {
+            let hook = |s: &str| run_detector(cmd, s);
+            direa_core::canary::gauntlet_with(Some(&hook))
+        }
+        None => direa_core::canary::gauntlet(),
+    };
+    if json {
+        ui.out(serde_json::to_string_pretty(&report)?);
+    } else {
+        ui.out(format!(
+            "adversarial detected: {}/{}",
+            report.adversarial_detected, report.adversarial_total
+        ));
+        ui.out(format!(
+            "evasion detected: {}/{}",
+            report.evasion_detected, report.evasion_total
+        ));
+        ui.out(format!(
+            "own payloads flagged: {}/{}",
+            report.payload_flagged, report.payload_total
+        ));
+        ui.out(if report.passed { "PASS" } else { "FAIL" });
+    }
+    if !report.passed {
+        bail!("canary gauntlet failed: the detector missed adversarial samples");
+    }
+    Ok(())
+}
+
+fn cmd_plan(ui: &Ui, manifest_path: &PathBuf, json: bool) -> Result<()> {
+    let manifest = load_manifest(manifest_path)?;
+    let registry = direa_core::planner::default_registry();
+    let plans = ui.timed(1, "plan", || plan_manifest(&manifest, &registry));
+
+    if json {
+        ui.out(serde_json::to_string_pretty(&plans)?);
+        return Ok(());
+    }
+
+    if plans.is_empty() {
+        ui.out(format!(
+            "no targets configured in {}",
+            manifest_path.display()
+        ));
+        return Ok(());
+    }
+    for plan in &plans {
+        ui.out(format!("target: {} ({})", plan.target, plan.kind.as_str()));
+        for step in &plan.steps {
+            ui.out(format!(
+                "  - {:<14} {:<18} {}",
+                step.adapter, step.action, step.detail
+            ));
+        }
+        if !plan.missing.is_empty() {
+            ui.out(format!(
+                "  ! missing adapters (install for deeper protection): {}",
+                plan.missing.join(", ")
+            ));
+        }
+    }
+    Ok(())
+}
+
+fn cmd_build(
+    ui: &Ui,
+    manifest_path: &PathBuf,
+    out: PathBuf,
+    dry_run: bool,
+    seed: Option<u64>,
+    force: bool,
+    json: bool,
+) -> Result<()> {
+    let manifest = load_manifest(manifest_path)?;
+    let result = ui.timed(1, "build", || {
+        build::build(&manifest, &out, dry_run, seed, force)
+    })?;
+
+    // Transform trace at -vv.
+    if !json && ui.verbosity >= 2 {
+        for target in &result.targets {
+            ui.info(
+                2,
+                format_args!("{} ({}) -> {}", target.target, target.kind, target.output),
+            );
+            for action in &target.actions {
+                ui.info(2, format_args!("  - {action}"));
+            }
+        }
+    }
+
+    if json {
+        ui.out(serde_json::to_string_pretty(&result)?);
+    } else {
+        for note in &result.notes {
+            ui.out(note);
+        }
+        if dry_run {
+            ui.out("dry run: no files written");
+        } else {
+            ui.out(format!("hardened output: {}", result.output_dir.display()));
+        }
+    }
+    Ok(())
+}
+
+#[allow(clippy::too_many_arguments)]
+fn cmd_verify(
+    ui: &Ui,
+    manifest_path: PathBuf,
+    original: PathBuf,
+    hardened: Option<PathBuf>,
+    with_rea: bool,
+    rea_command: Vec<String>,
+    build_meta: Option<PathBuf>,
+    with_runtime: bool,
+    decompiler: Option<String>,
+    format: ReportFormat,
+    out: Option<PathBuf>,
+    json: bool,
+) -> Result<()> {
+    let hardened = hardened.unwrap_or_else(|| {
+        let name = original
+            .file_name()
+            .map(PathBuf::from)
+            .unwrap_or_else(|| PathBuf::from("artifact"));
+        PathBuf::from("dist-hardened").join(name)
+    });
+    let mut opts = direa_verify::VerifyOptions::new(&original, &hardened);
+    opts.with_rea = with_rea;
+    opts.rea_command = rea_command;
+    opts.build_meta = build_meta;
+    opts.with_runtime = with_runtime;
+    opts.decompiler = decompiler;
+    // Honor `[runtime] instrumentation_signatures` when a manifest is present.
+    if let Ok(manifest) = Manifest::load(&manifest_path) {
+        opts.signatures = manifest.runtime.instrumentation_signatures;
+    }
+
+    let run = ui.timed(1, "verify", || {
+        direa_verify::run(&opts).map_err(|e| anyhow::anyhow!(e))
+    })?;
+    let report = &run.report;
+
+    let effective = if json { ReportFormat::Json } else { format };
+    let text = match effective {
+        ReportFormat::Human => human_report(report),
+        ReportFormat::Json => serde_json::to_string_pretty(report)?,
+        ReportFormat::Sarif => direa_verify::report::to_sarif(report),
+        ReportFormat::Junit => direa_verify::report::to_junit(report),
+    };
+    ui.out(&text);
+
+    if let Some(path) = out {
+        std::fs::write(&path, &text).with_context(|| format!("writing {}", path.display()))?;
+        ui.info(1, format!("wrote report to {}", path.display()));
+    }
+    Ok(())
+}
+
+fn human_report(report: &direa_core::ResistanceReport) -> String {
+    let mut out = String::new();
+    out.push_str(&format!("target: {}\n", report.target));
+    out.push_str(&format!(
+        "RRS: {}/100 (grade {})\n",
+        report.rrs,
+        report.grade.as_str()
+    ));
+    for m in &report.measurements {
+        out.push_str(&format!(
+            "  {:<30} exposure {:.2} -> {:.2}  (delta {:+.2})\n",
+            m.axis.as_str(),
+            m.baseline,
+            m.hardened,
+            m.delta()
+        ));
+    }
+    if !report.notes.is_empty() {
+        out.push_str("\nnotes:\n");
+        for note in &report.notes {
+            out.push_str(&format!("  - {note}\n"));
+        }
+    }
+    out
+}
