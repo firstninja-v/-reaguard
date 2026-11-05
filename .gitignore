@@ -3,3 +3,4 @@ release-*/
 *.tgz
 test-results/
 playwright-report/
+engine/target/

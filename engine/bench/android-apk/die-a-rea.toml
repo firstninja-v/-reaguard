@@ -1,0 +1,18 @@
+# Bench fixture: an Android APK (zip) with a `classes.dex`. The built-in APK
+# lane strips DEX debug info and repacks (B-042); deeper obfuscation is the `jvm`
+# adapter's job.
+[project]
+name = "android-apk"
+version = "1.0.0"
+
+[policy]
+profile = "high"
+
+[randomization]
+enabled = false
+
+[tarpit]
+enabled = false
+
+[[targets]]
+path = "app.apk"

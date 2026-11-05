@@ -1,0 +1,556 @@
+{
+  "repository": "https://github.com/danihelenterprises/die-a-rea",
+  "commit": "0d322552673309372f9937bc5f0c50641ed1514e",
+  "license": "MIT",
+  "directory": "engine",
+  "files": {
+    ".dockerignore": {
+      "sha256": "b760ce1dca67ae02dafcb922be585538484c8ed4a0c5ac2fcf2e0827134ac612",
+      "mode": 0
+    },
+    ".github/workflows/ci.yml": {
+      "sha256": "847bde812038e53647fbf20b305aa44713465af206ff6f4e636a1171e34353d4",
+      "mode": 0
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "6adc0d741ac0f916e677026f254da3496806854a6ac26b41b3c62cc27e706877",
+      "mode": 0
+    },
+    ".gitignore": {
+      "sha256": "888ae85da114432000cbe65790fc4972f938ce8938d43bf41794a94ecfdef8f4",
+      "mode": 0
+    },
+    "AGENTS.md": {
+      "sha256": "b35449e9a76e54ab8e2b56a3ba9f0f7a96df2614afda9675cada133555102de6",
+      "mode": 0
+    },
+    "BACKLOG.md": {
+      "sha256": "e18251fe2993cd305787302e9d9abd3d2ee046cb7a73679ac7318a70f31c15c4",
+      "mode": 0
+    },
+    "CHANGELOG.md": {
+      "sha256": "1eb56eeadbeb3233927939ac8c8df46bca9f1d9003b3ef2f4785f9a582e20674",
+      "mode": 0
+    },
+    "CONTRIBUTING.md": {
+      "sha256": "b018f5e74fefbaa40a9789d1ab5aeb12ee83d9e005ead228122318eebd0027cb",
+      "mode": 0
+    },
+    "Cargo.lock": {
+      "sha256": "158ea1665062b2fc3686edb12bec239faab13ab189123ba408979e591251e615",
+      "mode": 0
+    },
+    "Cargo.toml": {
+      "sha256": "4ea9abe9a8ce8612df0ba218b219b7b6f2335d0af0748d2326b88d4b79b91690",
+      "mode": 0
+    },
+    "KNOWLEDGE.md": {
+      "sha256": "245fc8d72a84c681a57c4c644c9d7db636412816b65b5ef5793b3918f91367dd",
+      "mode": 0
+    },
+    "LICENSE": {
+      "sha256": "8bcc3e6301cec62921d80d06c1e2408debf70b7c0796766a0aeaeee2dc120b96",
+      "mode": 0
+    },
+    "README.md": {
+      "sha256": "1e75faadfa998f709469e5a4dd052f4a6a160cde0c0c46d054426814fffe42bd",
+      "mode": 0
+    },
+    "STATE.md": {
+      "sha256": "a4ce3d915930fba920d9f020cd092ae18c348f828dbddaec47fd9cd75cb53a5a",
+      "mode": 0
+    },
+    "action.yml": {
+      "sha256": "782106ecc24184d723ad44cc7f82ee17f6aa911c92b5f48c1344bdb9fc7202ca",
+      "mode": 0
+    },
+    "adapters/clr/direa-clr": {
+      "sha256": "a1072c53d1d2442fe8aaf69fb99c0f2710b7023c1fe6972670588078f3fc1a25",
+      "mode": 493
+    },
+    "adapters/go/direa-go": {
+      "sha256": "76a461270b3a4d0a6e1628ae24a37ab1d8a0f6b272794d2f77fa64ddbec2979e",
+      "mode": 493
+    },
+    "adapters/js/direa-js": {
+      "sha256": "028f7d3596ba2b49c277e9a09003ac9344425037a2a4263151f55c0574385521",
+      "mode": 493
+    },
+    "adapters/jvm/direa-jvm": {
+      "sha256": "24272fdf586d68a2fbbc5015e84391aa39614a389e0f2c93510a80ab4bf33ff5",
+      "mode": 493
+    },
+    "adapters/llvm/direa-llvm": {
+      "sha256": "4f854a174c7d67dee86bf71dce469e15aab1bbaac7e56eb1955654ef8cff7c09",
+      "mode": 493
+    },
+    "adapters/wasm/direa-wasm": {
+      "sha256": "69ba998c139e9afc920b1b9862c3953f50872fdab36da511cca00dca841ee7d1",
+      "mode": 493
+    },
+    "bench/android-apk/die-a-rea.toml": {
+      "sha256": "3f942a20c629d829a847e5349af93c1bbcfc9d4d3ffaf785d933e041f579971f",
+      "mode": 0
+    },
+    "bench/dotnet/die-a-rea.toml": {
+      "sha256": "4814bebaef86063c72ec5e61ec5631dd00dad54ea01d8a69bc9a10849b431310",
+      "mode": 0
+    },
+    "bench/electron-asar/die-a-rea.toml": {
+      "sha256": "0083dc9ba5962365df931691ab8c77d89221f1b21c36ec159f0aeac5f6e07ef7",
+      "mode": 0
+    },
+    "bench/expected.json": {
+      "sha256": "ac7daca2b551a2203297714dd1c3aa871d015767ac0bbf61671f5cbf67fbd359",
+      "mode": 0
+    },
+    "bench/gen_fixtures.py": {
+      "sha256": "754a2357cfa977f8be3e7098dba99f7c5454d72baaeaba4a50a103538f994911",
+      "mode": 0
+    },
+    "bench/generate.sh": {
+      "sha256": "f14e5715ab56c473a294c870e3ebdef33a2c58c10048dab01daf9eba16c919c8",
+      "mode": 493
+    },
+    "bench/go/die-a-rea.toml": {
+      "sha256": "b1d528c7b4f3039253d9e61ae754fa0e5ecbefa452cdde5895a3050a566dc55a",
+      "mode": 0
+    },
+    "bench/java-class/die-a-rea.toml": {
+      "sha256": "ee15054e0e3b95071fe3c8e954f71dcaa9339e7a2dbbbf5ab3352568cdc5007c",
+      "mode": 0
+    },
+    "bench/java-jar/die-a-rea.toml": {
+      "sha256": "f06dd2aac588781d51aef564b7f85755f57aa568e7b3488565c53151b92209ac",
+      "mode": 0
+    },
+    "bench/js-secrets/app.js": {
+      "sha256": "6940af82a512763f38d6d0262dc62031b9c32257293949a69a3ef70fd4199c36",
+      "mode": 0
+    },
+    "bench/js-secrets/die-a-rea.toml": {
+      "sha256": "4ad0eb87420d4b258a1c3b4c3974efb61ed286c32e9e98945bfd620977b5ea3c",
+      "mode": 0
+    },
+    "bench/js-tree/bundle/main.js": {
+      "sha256": "42a9f8dba4622c193e93c855a47a181bfa7d7d51c7921770538f849612fcb975",
+      "mode": 0
+    },
+    "bench/js-tree/bundle/package.json": {
+      "sha256": "f234c3cdc47dd6a452caa38e7bd17e3b2fca08d325b6d2dc9971d5a6c23307f0",
+      "mode": 0
+    },
+    "bench/js-tree/die-a-rea.toml": {
+      "sha256": "1047585b8c7ec75715813cd70db67e061c2b42720bd186f25c8e322016a36ee1",
+      "mode": 0
+    },
+    "bench/native-elf/die-a-rea.toml": {
+      "sha256": "980e97fb894282e52df0c8cebe26a4f120da4afbd6225997d93e9aa74bb1e936",
+      "mode": 0
+    },
+    "bench/native-macho/die-a-rea.toml": {
+      "sha256": "0837a8b02d036ea803af3764f33f537f49fbd043e549666fcaba3bf6371df99d",
+      "mode": 0
+    },
+    "bench/native-pe/die-a-rea.toml": {
+      "sha256": "2bfc39155bec0c7da850b0e84ee6a5dba3348df46db3ba1553bc91fcc10f8db6",
+      "mode": 0
+    },
+    "bench/wasm-module/die-a-rea.toml": {
+      "sha256": "a76f0d8d933c61690aa149cd9ebd0a6be5d25642164442e81a45c7844db5241b",
+      "mode": 0
+    },
+    "crates/direa-cli/Cargo.toml": {
+      "sha256": "afb03c53d0d0926fa28d67e8f0670f01cb26a32cf50072846e0dd13087733da8",
+      "mode": 0
+    },
+    "crates/direa-cli/src/build.rs": {
+      "sha256": "046ca432b990d7eca6040185a065a4765f61d576c920f9e2d761c6024f2bb947",
+      "mode": 0
+    },
+    "crates/direa-cli/src/main.rs": {
+      "sha256": "f377f434d5d143e5a34d49e48db68c85075bea0b2a107c6e5303584cc57023be",
+      "mode": 0
+    },
+    "crates/direa-cli/src/ui.rs": {
+      "sha256": "b93e20a93cfedc9d54100db52af177de8f93a553ad8e0639cf030dfab39e3ed3",
+      "mode": 0
+    },
+    "crates/direa-cli/tests/adapters.rs": {
+      "sha256": "95a13efe82037dad549a4076e8589fc9f7809daceeafae4b134353d977e6f6b0",
+      "mode": 0
+    },
+    "crates/direa-cli/tests/e2e.rs": {
+      "sha256": "2469207c489a792854dbb0cdb94b9f78f04331ce1b77864c72940a49776e5b31",
+      "mode": 0
+    },
+    "crates/direa-core/Cargo.toml": {
+      "sha256": "fc85ecf36cd2e1de83b92d57c47559c6b28bfcad5697b19b2c82699c598b4968",
+      "mode": 0
+    },
+    "crates/direa-core/src/adapter.rs": {
+      "sha256": "dc5191cba5bdefca6d9401e71d97b8e103661108da7221735ccd472245d9e94c",
+      "mode": 0
+    },
+    "crates/direa-core/src/asar.rs": {
+      "sha256": "88e76f623c5af5fee219384851b41bd63eafbd4bab5d143a932aa986dc424dc0",
+      "mode": 0
+    },
+    "crates/direa-core/src/buildmeta.rs": {
+      "sha256": "af4c25bc816d6b2ba2b300b780d3bf67d1a14d4887f76fcc2eb4760728755f7b",
+      "mode": 0
+    },
+    "crates/direa-core/src/canary.rs": {
+      "sha256": "1a499cd5a79dd8189392eee79627575e2ead56a389d689b47cceac4677e3cff7",
+      "mode": 0
+    },
+    "crates/direa-core/src/dex.rs": {
+      "sha256": "8c380fe02a7202ffff5703759a8d134e2d4300482b7252505e204aafcbdd3d3d",
+      "mode": 0
+    },
+    "crates/direa-core/src/discover.rs": {
+      "sha256": "660c73ed649bcd0c602f45b69b261eb57215472a784e3c72fb9793194d3cbee2",
+      "mode": 0
+    },
+    "crates/direa-core/src/error.rs": {
+      "sha256": "4ce6e14f6784e3d21b92711608ca450dab4d5a364f79d3695f3a1bdf19107120",
+      "mode": 0
+    },
+    "crates/direa-core/src/guard.rs": {
+      "sha256": "60477c007b575cbb110405e8adef2d62441e7e0765a84b2f437e2edee98694f8",
+      "mode": 0
+    },
+    "crates/direa-core/src/jar.rs": {
+      "sha256": "6239c04922cb8d893237e3f4c967980ba8a58cb0f95d8f7659d2b2f72f576246",
+      "mode": 0
+    },
+    "crates/direa-core/src/java.rs": {
+      "sha256": "cfa3a97549b42e6774d84fd75af7c01e89347308ced3354b62dd71268799e3c4",
+      "mode": 0
+    },
+    "crates/direa-core/src/lib.rs": {
+      "sha256": "5d787fc92edbb07a1579d6ee0d6fb99b38333be608dda9a2606f3d7cc1e6b886",
+      "mode": 0
+    },
+    "crates/direa-core/src/manifest.rs": {
+      "sha256": "67c20249dffa82ae5a9abde6884c865edd848c567cd33a5cfc334cfa28caef00",
+      "mode": 0
+    },
+    "crates/direa-core/src/native_post.rs": {
+      "sha256": "c03b9e5d88644aa2ebc7093132a4e37df15028e88ee4c1c338cd564ba7b662ba",
+      "mode": 0
+    },
+    "crates/direa-core/src/planner.rs": {
+      "sha256": "5d6332498de207290d745017130d1e082e0088172963c086178764b322be6d1a",
+      "mode": 0
+    },
+    "crates/direa-core/src/policy.rs": {
+      "sha256": "f44e648dfdc72b736d7990c43fd0b066338f46a5578f314238c79f84000fd164",
+      "mode": 0
+    },
+    "crates/direa-core/src/random.rs": {
+      "sha256": "8355d5aa2abbdfbd2d4f89efa762c83a314ff4db3cf253a692d7e2605351a7ad",
+      "mode": 0
+    },
+    "crates/direa-core/src/rrs.rs": {
+      "sha256": "69d4fa0778ef937703d01a04d54a3931b9b8b95dc2568b5e72d73e1e7290719f",
+      "mode": 0
+    },
+    "crates/direa-core/src/scan.rs": {
+      "sha256": "caf26cf69d1e939dae215723e95d682409132b5ccda0549d7c4ad52fa6278985",
+      "mode": 0
+    },
+    "crates/direa-core/src/wasm.rs": {
+      "sha256": "ed5de14816bf20be9e4d759ace2b495a6e0e75dc13c473e775f48ee8d6a4420a",
+      "mode": 0
+    },
+    "crates/direa-core/tests/robustness.rs": {
+      "sha256": "3dc2a5cafc92730b1f92ffa5073c032cf6f1a3192a119b4c5af55c039c3f46e1",
+      "mode": 0
+    },
+    "crates/direa-ffi/Cargo.toml": {
+      "sha256": "c1e87bb8d57ad4f0a6e5c0b34494f7a56c7868b4c96fddff1547b0ae8cbd3c7a",
+      "mode": 0
+    },
+    "crates/direa-ffi/direa_ffi.h": {
+      "sha256": "97c9c428844de188a927ab3d19a996932cdfa0fdbb16b28bb4ef0a9a82f714dc",
+      "mode": 0
+    },
+    "crates/direa-ffi/src/lib.rs": {
+      "sha256": "66c4eef60a4b2a5d2911264389ec2a5341cd697a72d35725d359feef29141d3e",
+      "mode": 0
+    },
+    "crates/direa-verify/Cargo.toml": {
+      "sha256": "e0b4eab783d858502a2e7f3eee7e4fdac2c614263570dc09b86c36813f0b5864",
+      "mode": 0
+    },
+    "crates/direa-verify/src/harness.rs": {
+      "sha256": "94dd6953c1932c4c7f4988a7dc760ed24494ab32f33bb1e470c76e5351199e57",
+      "mode": 0
+    },
+    "crates/direa-verify/src/lib.rs": {
+      "sha256": "2a6791e4ab6fc8872d26c5125fc0ff098bbcf48b73d5baeadb186b93d758fbea",
+      "mode": 0
+    },
+    "crates/direa-verify/src/probes.rs": {
+      "sha256": "cde67188bc3952fca4b67eeac605cece9f05444a164743c720124532edba5d12",
+      "mode": 0
+    },
+    "crates/direa-verify/src/report.rs": {
+      "sha256": "7e01c06ec75f569fd875dcf1bdd1f132eaa3553b35b3ac9bf8d9c91343bd7eeb",
+      "mode": 0
+    },
+    "crates/direa-verify/src/runtime.rs": {
+      "sha256": "571d4f2d69625b81f8ab772ef1c8d7c1d0c3ab8dd21577db374b0b4cba06e925",
+      "mode": 0
+    },
+    "docker/Dockerfile": {
+      "sha256": "784e4f5d77f50e32703e2d460384a7332cf1625995f234f57458bc9c03fbc7e3",
+      "mode": 0
+    },
+    "docker/README.md": {
+      "sha256": "1d7db4ecac8cebb41fb78f224c4f38d4a8c1ac6a88c84487ec3d1c28f16d34ff",
+      "mode": 0
+    },
+    "docker/compose.yml": {
+      "sha256": "2c871820c9947a0c43b973412bfdf5689c43c6a4c9cc19c95f8d8e74734efed3",
+      "mode": 0
+    },
+    "docker/entrypoint.sh": {
+      "sha256": "f4ce5952d390b670d2cc25d3075a6733a09f2ddb589b5e89abefab3b3bb00c44",
+      "mode": 493
+    },
+    "docs/ADAPTERS.md": {
+      "sha256": "5c420f7c3f4e2f896ca171e08694d1383eb590df14ddbdba86b041ebc22216d5",
+      "mode": 0
+    },
+    "docs/CONTINUATION.md": {
+      "sha256": "a0497f848dfeed58d93d221a1caa919200cc408f7a43cc524b00ad1ef329049d",
+      "mode": 0
+    },
+    "docs/ETHICS.md": {
+      "sha256": "557c2b64e29f620681619504b0a7a3ba905b9006564d4cc730ab1a8d5658dbf5",
+      "mode": 0
+    },
+    "docs/PIGGYBACK.md": {
+      "sha256": "cfc7ff57b670e8d7dd814b5bc812044e0eb5789549463afdd7353e43a2a45aca",
+      "mode": 0
+    },
+    "docs/RANDOMIZATION.md": {
+      "sha256": "0ec76affc654d435de45beb708b5e3f7b2e6af868631c1a65eb8c50f56d0e1c1",
+      "mode": 0
+    },
+    "docs/REA-PIPELINE.md": {
+      "sha256": "db35571a13b682920ac848698408c1505e7ac6b6cdc8ab913cfb7e3ac73e7b97",
+      "mode": 0
+    },
+    "docs/README.md": {
+      "sha256": "f3fa89c212a79c5f96558acbd130b9477f742f2d3537e73a261c0cd6b35d3897",
+      "mode": 0
+    },
+    "docs/RELEASING.md": {
+      "sha256": "e0713d108ec33c3fe04b732c2164ec9e500f1c41023286b1eab5d2654d1bbbeb",
+      "mode": 0
+    },
+    "docs/RRS.md": {
+      "sha256": "b01dd7eec5df0acc656240540e2d207ae07be620e016e265a8d5635d1d74178f",
+      "mode": 0
+    },
+    "docs/RUNTIME.md": {
+      "sha256": "a804f6715198b8ea6fa38d46bfc5d14b78d224c94aa877dbdf87e787678d429f",
+      "mode": 0
+    },
+    "docs/TARPITS.md": {
+      "sha256": "36b62b610107d5769a71cb3b26dccd0ceb0f58fc03f10ebd4c366891fe3d082e",
+      "mode": 0
+    },
+    "docs/THREAT-MODEL.md": {
+      "sha256": "fc9c8932833276ae175b49bdee6bf2bb09a30cd4b88593d06f285fd00ac28c3e",
+      "mode": 0
+    },
+    "docs/adr/0000-template.md": {
+      "sha256": "74984bbc73b2739ee175156dd07b48aa3718dc2673e78300956a09ee2cd0da2c",
+      "mode": 0
+    },
+    "docs/adr/ADR-0001-local-only-read-only.md": {
+      "sha256": "2ac58b2f85fb789942cd13c56f4058402f01cc410aa362a46385a5ce2dea3fa4",
+      "mode": 0
+    },
+    "docs/adr/ADR-0002-adapter-subprocess-protocol.md": {
+      "sha256": "a9a4d254ae7692b34a55865fc9078296076923abd3274f0d69206e0e7eab246b",
+      "mode": 0
+    },
+    "docs/adr/ADR-0003-deterministic-randomization.md": {
+      "sha256": "6c01cdcb54777e25e52cb7c898ba455d07023f509473e4e766ae37d5aed9771e",
+      "mode": 0
+    },
+    "docs/adr/ADR-0004-measure-with-rrs.md": {
+      "sha256": "77eceebd35d9eb3d1df37d6e8910a2e4b290246f59cd2c7d7159d65be279f153",
+      "mode": 0
+    },
+    "docs/adr/ADR-0005-signal-to-noise-and-skip-axes.md": {
+      "sha256": "32ba43c59f3b622e5fb2b7a7b83bcee2c28524be7771899a30436d26145c1bd6",
+      "mode": 0
+    },
+    "docs/adr/ADR-0006-honest-agent-defense.md": {
+      "sha256": "7692e071f11fe32b54d912fd035f4d93d4a85a9d7364e7cdd342e9cc2057a9d7",
+      "mode": 0
+    },
+    "docs/adr/ADR-0007-mit-core-subprocess-boundary.md": {
+      "sha256": "452c49d20280eeef3a096eb6600755d21edff063939c202b9fa50930fd4e4c75",
+      "mode": 0
+    },
+    "docs/adr/ADR-0008-native-post-in-process.md": {
+      "sha256": "3bb9489f87e053094ba4abeb72ac53598b606a09703c28b69f798f43b4c7fcae",
+      "mode": 0
+    },
+    "docs/adr/ADR-0009-build-executes-external-adapters.md": {
+      "sha256": "4cce746cfbe4ae52c6b23414dfeb874dd64249b29aaabd672369579917b403e5",
+      "mode": 0
+    },
+    "docs/adr/ADR-0010-strings-axis-counts-tokens.md": {
+      "sha256": "3b290b64f6e89053ad5af170abee13db36a799de14f6ed121b36027323c67d35",
+      "mode": 0
+    },
+    "docs/adr/ADR-0011-string-exposure-measures-verbatim-survival.md": {
+      "sha256": "54944a7c0cefd6f077c50c46b20e9a2ba17c31a06782f84518329ed8cd52bfef",
+      "mode": 0
+    },
+    "docs/adr/ADR-0012-build-never-overwrites-source.md": {
+      "sha256": "e6f7952363340ef027094e962add8531de9c98afee982a53f64123cb34f76f56",
+      "mode": 0
+    },
+    "docs/adr/ADR-0013-post-build-health-check.md": {
+      "sha256": "19090c0e003b35f21f569f9274d68931f0ea0411ed0e9f2c73e32a9794e6810c",
+      "mode": 0
+    },
+    "docs/adr/ADR-0014-runtime-instrumentation-measured-from-environment.md": {
+      "sha256": "cc06bf8d23336a7159945af16b4695ee15e12bef7aa56e42ce473265b7d200f7",
+      "mode": 0
+    },
+    "docs/adr/ADR-0015-docker-toolchain.md": {
+      "sha256": "7d3ebb749ad6a3da11d59d88cc50d1287766ed9dc88a871a6302a6c6cf260acb",
+      "mode": 0
+    },
+    "docs/adr/ADR-0016-bound-deceptive-decoys.md": {
+      "sha256": "3bfafdfc14934014f1526fd1def04f92bab8aad6a3874b0cf775e9f06750df6b",
+      "mode": 0
+    },
+    "docs/adr/ADR-0017-control-flow-axis-is-external.md": {
+      "sha256": "dca6ba3db2668c7e986b444397f3d95d32d9e3438ec6825493975ee074105c33",
+      "mode": 0
+    },
+    "docs/adr/ADR-0018-native-guard-is-link-time.md": {
+      "sha256": "1267379747c147df86e6247de4673f49cfc9ea0cdc2801236df2cdef3c84370a",
+      "mode": 0
+    },
+    "docs/adr/ADR-0019-remove-agent-deception-axis.md": {
+      "sha256": "dedb5193d44457e479abf115de7d0847cbe02adbd43be17670843f3052798994",
+      "mode": 0
+    },
+    "docs/adr/ADR-0020-canary-detector-normalizes-before-matching.md": {
+      "sha256": "cc093c9a6b8b83ad9dc26ff1897b81e93e556c8e0ad37c906320c0fb819ecf89",
+      "mode": 0
+    },
+    "docs/adr/ADR-0021-oss-eval-harness-uses-network.md": {
+      "sha256": "dc41004f3a6a783b751324a683d3fb75dd8626c6ac03ce349301645e59eb77b4",
+      "mode": 0
+    },
+    "docs/adr/README.md": {
+      "sha256": "426cd66d3f55dfc4de7c36c8bdd29602a557ce61c6d64e5d5642618f4434a8e0",
+      "mode": 0
+    },
+    "eval/Dockerfile": {
+      "sha256": "da52c850dbdccf31d2722a5556bc58d02a622a4fe9e107ba389f1d2534bdb613",
+      "mode": 0
+    },
+    "eval/README.md": {
+      "sha256": "6837d28f92879ca03da2793fa8c3612f9430eb8d9c65bcf0f851075d073541f8",
+      "mode": 0
+    },
+    "eval/entrypoint.sh": {
+      "sha256": "92fd85be5cfd78cd8ef38a8e37a539102b5c1517e87fd5360a65f971d7fd5bdc",
+      "mode": 493
+    },
+    "eval/repos/asar.sh": {
+      "sha256": "59a2a5df6fc610fff4f912fe27114f6e3d35abf734838a10857548ff0fe789fd",
+      "mode": 0
+    },
+    "eval/repos/axios.sh": {
+      "sha256": "d2b0142021113cee24717f7007434414a59c8e5a622ebfaef55a817e45f945bc",
+      "mode": 0
+    },
+    "eval/repos/fd.sh": {
+      "sha256": "6dce3b4a7edfac09c2bbba352848abda1d26c578803a3e8212a35766799b937f",
+      "mode": 0
+    },
+    "eval/repos/fzf.sh": {
+      "sha256": "86a6593ee5aca47f6835678d786b94f105fa4d73d83bb3071dcc17e3f8a5c644",
+      "mode": 0
+    },
+    "eval/repos/gson.sh": {
+      "sha256": "111388666bee6040a2bfd67f01125b4b0b0a592a435f72fa0869d69c65d1218c",
+      "mode": 0
+    },
+    "eval/repos/jq.sh": {
+      "sha256": "68beff5f48e16e3f890b448c0774877013ffb9ba3a7452964783a569f48488d3",
+      "mode": 0
+    },
+    "eval/repos/newtonsoft.sh": {
+      "sha256": "92ea57bd1360bf2903ce988d305296d5489ba3bcc40d38542a476f4e08547957",
+      "mode": 0
+    },
+    "eval/repos/sqljs.sh": {
+      "sha256": "4abcc8e0313ef92dedba0ed93b55114ab19d7281d917278a4b74247b4112d37d",
+      "mode": 0
+    },
+    "eval/repos/termux.sh": {
+      "sha256": "d8aa3658df5b8a6d89abb02cb5fd518854ca8d7d3f53cbf7da911917302df28b",
+      "mode": 0
+    },
+    "eval/run.sh": {
+      "sha256": "e16832548e9f0abe9d7130e7613384f81ebaf75048a22c901d33d060214b7591",
+      "mode": 493
+    },
+    "examples/die-a-rea.toml": {
+      "sha256": "c3862682883e6053bb412fd172466a915e8e5f6dedc241291bb79d880e073a92",
+      "mode": 0
+    },
+    "policies/high.toml": {
+      "sha256": "17a4c05b61ca86afbb797efc98fc9ca9804988108af838d71201097161c4c997",
+      "mode": 0
+    },
+    "policies/low.toml": {
+      "sha256": "aeff17c1e8212c4b9d30d23829f897ef338a69821e797ef2259513fb4ce5ee30",
+      "mode": 0
+    },
+    "policies/medium.toml": {
+      "sha256": "09a8c14a0607448628f717b8699b84bc46a617a23682cb59395da0b0d055c052",
+      "mode": 0
+    },
+    "policies/paranoid.toml": {
+      "sha256": "5f7ca6d7460e1676dbe1581739e01eefabc82cc4883bf0497bc17302d188723b",
+      "mode": 0
+    },
+    "runtime/guard/direa_guard.c": {
+      "sha256": "c9fea368acca1b8055930d70344a5eb29d8197e8c4d9d04870896e4fce3c1e60",
+      "mode": 0
+    },
+    "runtime/guard/direa_guard.h": {
+      "sha256": "ddc3932cd545c3eedc62092e6ced32350295022ebd7e7e5cee58a2b016e981c3",
+      "mode": 0
+    },
+    "testbowl": {
+      "sha256": "d538b34c35a4c4a8767291c8ca3778588e37caf6aa1eb2491fb52c06f39e580e",
+      "mode": 493
+    },
+    "tools/controlflow-count": {
+      "sha256": "cf138dba26b653e38c9ece4274ba67376ba2c0ba0ee8685c656d15719d7a82cf",
+      "mode": 493
+    },
+    "tools/docs-check.sh": {
+      "sha256": "49882ee5ebe84e88b42fe88cdc38a8b377cd5f04c86f7d51a96b55ffe524c27e",
+      "mode": 493
+    }
+  }
+}

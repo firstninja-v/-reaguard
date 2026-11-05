@@ -1,0 +1,23 @@
+/target
+**/*.rs.bk
+.direa-cache/
+direa-report.json
+
+# Generated bench fixtures (see bench/generate.sh).
+bench/wasm-module/mod.wasm
+bench/java-class/App.class
+bench/native-elf/app
+bench/native-pe/app.exe
+bench/native-macho/app
+bench/go/app
+bench/dotnet/App.dll
+bench/electron-asar/app.asar
+bench/android-apk/app.apk
+bench/java-jar/app.jar
+
+# The test bowl output (see eval/README.md).
+testbowl-out/
+
+# Core dumps (e.g. from a crashing toolchain in a container).
+core
+core.*
